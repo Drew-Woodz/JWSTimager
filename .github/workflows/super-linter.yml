@@ -1,11 +1,13 @@
 name: super-linter
 
 on:
-  push: [main, dev]
-  pull_request: [main, dev]
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
 
 jobs:
-  super-lint
+  super-lint:
     name: Linter
     runs-on: ubuntu-latest
     steps:
