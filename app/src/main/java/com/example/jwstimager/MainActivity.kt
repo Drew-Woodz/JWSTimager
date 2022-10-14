@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,7 +48,7 @@ fun ImageCard(image: ImageData) {
     var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
     val surfaceColor by animateColorAsState(
-        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
     )
     Surface(
         //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
@@ -66,7 +67,7 @@ fun ImageCard(image: ImageData) {
                 modifier = Modifier
                     //.size(300.dp)
                     //.border(1.5.dp, MaterialTheme.colorScheme.primary)
-                    // toggle is expanded by clicking on the image
+                    //toggle is expanded by clicking on the image
                     .clickable { isExpanded = !isExpanded }
                     .fillMaxWidth()
             )
@@ -106,11 +107,22 @@ fun ScrollingList(imageList: List<ImageData>) {
 
 @Composable
 fun TitleBar() {
-    Column(modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            //.fillMaxSize()
+            .padding(15.dp)
     ) {
-        Text(text = "JWSTimager")
+        Column(
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "JWSTimager",
+               // style = MaterialTheme.typography.headlineMedium
+            )
+        }
+
     }
 }
 
