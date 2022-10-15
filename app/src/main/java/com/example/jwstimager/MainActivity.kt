@@ -18,8 +18,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -48,7 +50,7 @@ fun ImageCard(image: ImageData) {
     var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
     val surfaceColor by animateColorAsState(
-        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
     )
     Surface(
         //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
@@ -107,23 +109,24 @@ fun ScrollingList(imageList: List<ImageData>) {
 
 @Composable
 fun TitleBar() {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            //.fillMaxSize()
-            .padding(15.dp)
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(
-                text = "JWSTimager",
-               // style = MaterialTheme.typography.headlineMedium
+
+    Row(modifier = Modifier.padding(all = 8.dp)) {
+            Image(
+                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+                contentDescription = "logo",
+                modifier = Modifier.size(65.dp, 65.dp)
+
             )
+            Column(modifier = Modifier.padding(all = 8.dp)) {
+                Text("JWSTimager",
+                    textAlign =TextAlign.Right,
+                    fontSize = 28.sp)
+                // style = MaterialTheme.typography.headlineMedium
+            }
+
         }
 
-    }
+
 }
 
 //@Preview(showBackground = true)
@@ -142,7 +145,7 @@ fun DefaultPreview() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.primary
         ) {
             Column {
                 TitleBar()
