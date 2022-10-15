@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScrollingList(imageList = SampleData.sampleImageList)
+                    DefaultPreview()
                 }
             }
         }
@@ -71,7 +72,7 @@ fun ImageCard(image: ImageData) {
                     //.border(1.5.dp, MaterialTheme.colorScheme.primary)
                     //toggle is expanded by clicking on the image
                     .clickable { isExpanded = !isExpanded }
-                    .fillMaxWidth()
+                    .fillMaxSize()
             )
             AnimatedVisibility(visible = isExpanded) {
                 //Spacer(modifier = Modifier.width(8.dp))
@@ -114,19 +115,18 @@ fun TitleBar() {
             Image(
                 painter = painterResource(id = R.mipmap.ic_launcher_foreground),
                 contentDescription = "logo",
-                modifier = Modifier.size(65.dp, 65.dp)
+                modifier = Modifier.size(70.dp, 70.dp)
 
             )
-            Column(modifier = Modifier.padding(all = 8.dp)) {
+            Column() {
                 Text("JWSTimager",
-                    textAlign =TextAlign.Right,
-                    fontSize = 28.sp)
+                    color = Color.White,
+                    textAlign = TextAlign.Justify,
+                    fontSize = 32.sp)
                 // style = MaterialTheme.typography.headlineMedium
             }
 
         }
-
-
 }
 
 //@Preview(showBackground = true)
