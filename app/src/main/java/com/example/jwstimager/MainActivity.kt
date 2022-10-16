@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
             ImageCard(
                 ImageData(
                     "google",
-                    "some link",
+                    "some link here",
                     R.drawable.jwst_in_space_cc
                 )
             )
@@ -127,9 +127,9 @@ fun ImageCard(image: ImageData) {
             Button( onClick = {
 
                 val description = "This is from the JWST Imager App!!!!"
-                context.startActivity(shareIntent)
 
                 /*
+
                 coroutineScope.launch {
                     val drawable = imageLoader.execute(request).drawable
                     val description = "This is from the JWST Imager App!!!!"
@@ -158,6 +158,7 @@ fun ImageCard(image: ImageData) {
                     )
                 }
                 */
+                context.startActivity(shareIntent)
 
 
             }) {
