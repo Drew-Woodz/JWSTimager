@@ -15,10 +15,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ScrollingList(imageList = SampleData.sampleImageList)
+                    DefaultPreview()
                 }
             }
         }
@@ -47,7 +51,7 @@ fun ImageCard(image: ImageData) {
     var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
     val surfaceColor by animateColorAsState(
-        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
     )
     Surface(
         //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
@@ -66,9 +70,9 @@ fun ImageCard(image: ImageData) {
                 modifier = Modifier
                     //.size(300.dp)
                     //.border(1.5.dp, MaterialTheme.colorScheme.primary)
-                    // toggle is expanded by clicking on the image
+                    //toggle is expanded by clicking on the image
                     .clickable { isExpanded = !isExpanded }
-                    .fillMaxWidth()
+                    .fillMaxSize()
             )
             AnimatedVisibility(visible = isExpanded) {
                 //Spacer(modifier = Modifier.width(8.dp))
@@ -106,12 +110,23 @@ fun ScrollingList(imageList: List<ImageData>) {
 
 @Composable
 fun TitleBar() {
-    Column(modifier = Modifier
-        .padding(24.dp)
-        .fillMaxWidth()
-    ) {
-        Text(text = "JWSTimager")
-    }
+
+    Row(modifier = Modifier.padding(all = 8.dp)) {
+            Image(
+                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+                contentDescription = "logo",
+                modifier = Modifier.size(70.dp, 70.dp)
+
+            )
+            Column() {
+                Text("JWSTimager",
+                    color = Color.White,
+                    textAlign = TextAlign.Justify,
+                    fontSize = 32.sp)
+                // style = MaterialTheme.typography.headlineMedium
+            }
+
+        }
 }
 
 //@Preview(showBackground = true)
@@ -130,7 +145,7 @@ fun DefaultPreview() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = MaterialTheme.colorScheme.primary
         ) {
             Column {
                 TitleBar()
