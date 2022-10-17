@@ -1,0 +1,25 @@
+name: super-linter
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  super-lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Run Super Linter
+        uses: github/super-linter@v4.9.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_KOTLIN: true
+          VALIDATE_KOTLIN_ANDROID: true
+          VALIDATE_ALL_CODEBASE: false
+
+
