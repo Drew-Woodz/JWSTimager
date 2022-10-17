@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -91,7 +92,7 @@ fun ImageCard(image: ImageData) {
 
             val context = LocalContext.current
 
-            Button(
+            Button(modifier = Modifier.align(Alignment.End),
                 onClick={
 
                     context.sharing(image.rsc_id)
@@ -106,9 +107,8 @@ fun ImageCard(image: ImageData) {
                         )
                     }
                     */
-
-
-                }) {
+                }
+            ) {
                 Text(text = "Share", color = Color.White)
             }
 
@@ -150,8 +150,6 @@ fun Context.sharing(imageName: Int){
         type = "image/png"
         putExtra(Intent.EXTRA_STREAM, uriPath)
     }
-
-
     startActivity(shareIntent)
 }
 
@@ -168,33 +166,23 @@ fun ScrollingList(imageList: List<ImageData>) {
 @Composable
 fun TitleBar() {
 
-    Row(modifier = Modifier.padding(all = 8.dp)) {
+    Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = R.mipmap.ic_launcher_foreground),
                 contentDescription = "logo",
                 modifier = Modifier.size(70.dp, 70.dp)
 
             )
-            Column() {
+            //Column() {
                 Text("JWSTimager",
                     color = Color.White,
-                    textAlign = TextAlign.Justify,
+                    //textAlign = TextAlign.Justify,
                     fontSize = 32.sp)
                 // style = MaterialTheme.typography.headlineMedium
-            }
+            //}
 
         }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    JWSTimagerTheme {
-//        Surface {
-//            MessageCard(msg = Message("John", "Sup Sup. This is a test composable!"))
-//        }
-//    }
-//}
 
 @Preview(showBackground = true)
 @Composable
