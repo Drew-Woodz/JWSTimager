@@ -32,7 +32,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +64,6 @@ data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
 
 @Composable
 fun ImageCard(image: ImageData) {
-
     val coroutineScope = rememberCoroutineScope()
     // keep track of whether or not the image card is expanded
     var isExpanded by remember { mutableStateOf(false) }
@@ -78,6 +84,16 @@ fun ImageCard(image: ImageData) {
 
         Column(modifier = Modifier.padding(all = 8.dp)) {
 
+            AsyncImage(model = image.src_link,
+                contentDescription = image.title,
+                modifier = Modifier
+                    //.size(300.dp)
+                    //.border(1.5.dp, MaterialTheme.colorScheme.primary)
+                    //toggle is expanded by clicking on the image
+                    .clickable { isExpanded = !isExpanded }
+                    .fillMaxSize()
+            )
+            /*
             Image(
                 painter = painterResource(id = image.rsc_id),
                 contentDescription = "This is a test image of the JWST",
@@ -88,25 +104,49 @@ fun ImageCard(image: ImageData) {
                     .clickable { isExpanded = !isExpanded }
                     .fillMaxSize()
             )
+            */
+
 
             val context = LocalContext.current
 
             Button(
                 onClick={
 
-                    context.sharing(image.rsc_id)
-                    /*
-                    val state = painter.state as? AsyncImagePainter.State.Success
-                    val drawable = state?.result?.drawable
-                    if (drawable != null) {
-                        context.shareImage(
-                            "Share image via",
-                            drawable,
-                            "testimage1"
-                        )
-                    }
-                    */
+                    // Get image from url
+                    val imageLoader = ImageLoader(context)
+                    val request = ImageRequest.Builder(context)
+                        .data(image.src_link)
+                        .build()
 
+                    coroutineScope.launch {
+                        val drawable = imageLoader.execute(request).drawable
+
+                        //Get Bitmap from imageView
+                        val bitmap = drawable?.toBitmap() // your imageView here.
+
+                        //Compress image
+                        val bytes = ByteArrayOutputStream()
+                        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+
+                        //Save image & get path of it
+                        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "tempimage", null)
+
+                        //Get URI of image
+                        val uri = Uri.parse(path)
+
+                        // activity to share image with Intent
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
+                            type = "image/png"
+                            putExtra(Intent.EXTRA_STREAM, uri)
+                        }
+
+                        context.startActivity(shareIntent)
+                    }
+
+
+                    //context.sharing(image.rsc_id)
 
                 }) {
                 Text(text = "Share", color = Color.White)
@@ -137,24 +177,6 @@ fun ImageCard(image: ImageData) {
         }
     }
 }
-
-fun Context.sharing(imageName: Int){
-    val b = BitmapFactory.decodeResource(resources, imageName)
-    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
-
-    val uriPath = Uri.parse(path)
-
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
-        type = "image/png"
-        putExtra(Intent.EXTRA_STREAM, uriPath)
-    }
-
-
-    startActivity(shareIntent)
-}
-
 
 @Composable
 fun ScrollingList(imageList: List<ImageData>) {
