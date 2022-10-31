@@ -1,5 +1,6 @@
 package com.example.jwstimager
 
+
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -8,17 +9,24 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -26,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -33,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DefaultPreview()
+                    Navigation()
                 }
             }
         }
@@ -56,6 +66,8 @@ class MainActivity : ComponentActivity() {
 data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
 
 
+//
+//
 @Composable
 fun ImageCard(image: ImageData) {
 
@@ -138,6 +150,9 @@ fun ImageCard(image: ImageData) {
     }
 }
 
+
+//
+//
 fun Context.sharing(imageName: Int){
     val b = BitmapFactory.decodeResource(resources, imageName)
     val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
@@ -154,6 +169,8 @@ fun Context.sharing(imageName: Int){
 }
 
 
+//
+//
 @Composable
 fun ScrollingList(imageList: List<ImageData>) {
     LazyColumn {
@@ -163,28 +180,85 @@ fun ScrollingList(imageList: List<ImageData>) {
     }
 }
 
+
+//
+//
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+internal fun ScrollingGridList(imageList: List<ImageData>){
+
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(2),
+            content = {
+                items(imageList) { image ->
+                    ImageCard(image)
+                }
+            }
+        )
+
+}
+
+
+/*
+//
+//
+@Composable
+fun rememberLazyGridState(
+    initialFirstVisibleItemIndex: Int = 0,
+    initialFirstVisibleItemScrollOffset: Int = 0
+): LazyGridState {}
+*/
+
+/*
+//
+//
+@Composable
+fun DropdownMenu() {
+    var expanded by remember { mutableStateOf(false)}
+    val list = listOf("List","Grid","News","About")
+    var selectedItem by remember { mutableStateOf( "")}
+    var textFiledSize by remember { mutableStateOf(Size.Zero)}
+    val icon = if (expanded){
+        Icons.Filled.KeyboardArrowUp
+    }else {
+        Icons.Filled.KeyboardArrowDown
+    }
+
+    Column(modifier = Modifier.padding(20.dp)) {
+
+
+    }
+
+}
+*/
+
+
+
+
+
 @Composable
 fun TitleBar() {
 
     Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
+        Image(
+            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+            contentDescription = "logo",
+            modifier = Modifier.size(70.dp, 70.dp)
 
-            )
-            //Column() {
-                Text("JWSTimager",
-                    color = Color.White,
-                    //textAlign = TextAlign.Justify,
-                    fontSize = 32.sp)
-                // style = MaterialTheme.typography.headlineMedium
-            //}
+        )
+        //Column() {
+        Text("JWSTimager",
+            color = Color.White,
+            //textAlign = TextAlign.Justify,
+            fontSize = 32.sp)
+        // style = MaterialTheme.typography.headlineMedium
+        //}
 
-        }
+    }
 }
 
-@Preview(showBackground = true)
+
+
 @Composable
 fun DefaultPreview() {
     JWSTimagerTheme {
@@ -194,7 +268,9 @@ fun DefaultPreview() {
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                //ScrollingList(imageList = SampleData.sampleImageList)
+                ScrollingGridList(imageList = SampleData.sampleImageList)
+
             }
         }
 
