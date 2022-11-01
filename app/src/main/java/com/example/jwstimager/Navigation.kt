@@ -24,7 +24,6 @@ fun Navigation(){
     NavHost(navController = navController, startDestination = Screen.MainScreen.route){
         composable(route = Screen.MainScreen.route){
             MainScreen(navController = navController)
-            //GalleryScreen(navController = navController)
 
         }
 
