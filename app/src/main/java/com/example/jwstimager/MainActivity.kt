@@ -25,12 +25,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,7 +42,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
+import androidx.core.graphics.drawable.toBitmap
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +70,6 @@ class MainActivity : ComponentActivity() {
 
 data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
 
-
-//
-//
 @Composable
 fun ImageCard(image: ImageData) {
 
@@ -91,9 +93,8 @@ fun ImageCard(image: ImageData) {
 
         Column(modifier = Modifier.padding(all = 8.dp)) {
 
-            Image(
-                painter = painterResource(id = image.rsc_id),
-                contentDescription = "This is a test image of the JWST",
+            AsyncImage(model = image.src_link,
+                contentDescription = image.title,
                 modifier = Modifier
                     //.size(300.dp)
                     //.border(1.5.dp, MaterialTheme.colorScheme.primary)
@@ -104,26 +105,49 @@ fun ImageCard(image: ImageData) {
 
             val context = LocalContext.current
 
-            Button(modifier = Modifier.align(Alignment.End),
-                onClick={
+            IconButton(modifier = Modifier.align(Alignment.End),
+                onClick = {
+                    // Get image from url
+                    val imageLoader = ImageLoader(context)
+                    val request = ImageRequest.Builder(context)
+                        .data(image.src_link)
+                        .build()
 
-                    context.sharing(image.rsc_id)
-                    /*
-                    val state = painter.state as? AsyncImagePainter.State.Success
-                    val drawable = state?.result?.drawable
-                    if (drawable != null) {
-                        context.shareImage(
-                            "Share image via",
-                            drawable,
-                            "testimage1"
-                        )
+                    coroutineScope.launch {
+                        val drawable = imageLoader.execute(request).drawable
+
+                        //Get Bitmap from imageView
+                        val bitmap = drawable?.toBitmap() // your imageView here.
+
+                        //Compress image
+                        val bytes = ByteArrayOutputStream()
+                        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+
+                        //Save image & get path of it
+                        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "tempimage", null)
+
+                        //Get URI of image
+                        val uri = Uri.parse(path)
+
+                        // activity to share image with Intent
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
+                            type = "image/png"
+                            putExtra(Intent.EXTRA_STREAM, uri)
+                        }
+
+                        context.startActivity(shareIntent)
                     }
-                    */
-                }
-            ) {
-                Text(text = "Share", color = Color.White)
-            }
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Share,
+                        contentDescription = null,
+                        tint = Color.LightGray,
+                        modifier = Modifier.size(20.dp)
 
+                )
+            }
 
             AnimatedVisibility(visible = isExpanded) {
                 //Spacer(modifier = Modifier.width(8.dp))
@@ -149,25 +173,6 @@ fun ImageCard(image: ImageData) {
         }
     }
 }
-
-
-//
-//
-fun Context.sharing(imageName: Int){
-    val b = BitmapFactory.decodeResource(resources, imageName)
-    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
-
-    val uriPath = Uri.parse(path)
-
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
-        type = "image/png"
-        putExtra(Intent.EXTRA_STREAM, uriPath)
-    }
-    startActivity(shareIntent)
-}
-
 
 //
 //
