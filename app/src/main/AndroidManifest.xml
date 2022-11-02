@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+<<<<<<< HEAD
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.jwstimager">
+=======
+=======
+>>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+<<<<<<< HEAD
+>>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
+=======
+>>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 
     <application
         android:allowBackup="true"
@@ -15,6 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JWSTimager"
         tools:targetApi="31">
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,6 +42,10 @@
                 android:resource="@xml/filepath" />
         </provider>
 
+<<<<<<< HEAD
+>>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
+=======
+>>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
         <activity
             android:name=".MainActivity"
             android:exported="true"
