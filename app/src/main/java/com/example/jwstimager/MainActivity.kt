@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.example.jwstimager
 
 
@@ -27,36 +29,47 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.PopupProperties
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             JWSTimagerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Navigation()
-                }
+                MainScreen()
             }
         }
 
@@ -64,6 +77,26 @@ class MainActivity : ComponentActivity() {
 }
 
 data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
+
+@ExperimentalMaterial3Api
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = { TitleBar() },
+        bottomBar = { BottomNavigationBar(navController) },
+        content = { padding ->
+            Box(modifier = Modifier.padding(padding)) {
+                Navigation(navController = navController)
+            }
+        },
+        //backgroundColor = colorResource(R.color.colorPrimaryDark) // Set background color to avoid the white flashing when you switch between screens
+    )
+
+}
+
+
+
 
 
 //
@@ -238,7 +271,6 @@ fun DropdownMenu() {
 
 @Composable
 fun TitleBar() {
-
     Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
@@ -275,5 +307,76 @@ fun DefaultPreview() {
         }
 
 
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    val items = listOf(
+        NavItem.Home,
+        NavItem.Grid,
+        NavItem.Favorites,
+        NavItem.News,
+        NavItem.About
+    )
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.secondary,
+    ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        items.forEach { item ->
+            BottomNavigationItem(
+                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
+                label = { Text(text = item.title) },
+                selectedContentColor = Color.White,
+                unselectedContentColor = Color.White.copy(0.4f),
+                alwaysShowLabel = true,
+                selected = false,
+                onClick = {
+                    // Pop up to the start destination of the graph to
+                    // avoid building up a large stack of destinations
+                    // on the back stack as users select items
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUp(route) {
+                            saveState = true
+                        }
+                    }
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
+                }
+            )
+
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BottomNavigationBarPreview() {
+    BottomNavigationBar()
+}
+
+@Composable
+fun Navigation(navController: NavHostController) {
+    NavHost(navController, startDestination = NavItem.Home.route) {
+        composable(NavItem.Home.route) {
+            Home()
+        }
+        composable(NavItem.Grid.route) {
+            Grid()
+        }
+        composable(NavItem.Favorites.route) {
+            Favorites()
+        }
+        composable(NavItem.News.route) {
+            News()
+        }
+        composable(NavItem.About.route) {
+            About()
+        }
     }
 }
