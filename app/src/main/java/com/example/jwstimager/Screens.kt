@@ -12,7 +12,7 @@ import com.example.jwstimager.ui.theme.JWSTimagerTheme
 //
 //
 @Composable
-fun Home() {
+fun HomeScreen() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -32,13 +32,13 @@ fun Home() {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    Home()
+    HomeScreen()
 }
 
 //
 //
 @Composable
-fun Grid() {
+fun GridScreen() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -56,14 +56,14 @@ fun Grid() {
 @Preview(showBackground = true)
 @Composable
 fun GridScreenPreview() {
-    Grid()
+    GridScreen()
 }
 
 
 //
 //
 @Composable
-fun Favorites() {
+fun FavoritesScreen() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -81,14 +81,14 @@ fun Favorites() {
 @Preview(showBackground = true)
 @Composable
 fun FavoritesScreenPreview() {
-    Favorites()
+    FavoritesScreen()
 }
 
 
 //
 //
 @Composable
-fun News() {
+fun NewsScreen() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -106,14 +106,14 @@ fun News() {
 @Preview(showBackground = true)
 @Composable
 fun NewsScreenPreview() {
-    News()
+    NewsScreen()
 }
 
 
 //
 //
 @Composable
-fun About() {
+fun AboutScreen() {
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -131,5 +131,5 @@ fun About() {
 @Preview(showBackground = true)
 @Composable
 fun AboutScreenPreview() {
-    About()
+    AboutScreen()
 }

@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+//@file:OptIn(ExperimentalMaterial3Api::class)
 
 package com.example.jwstimager
 
@@ -32,9 +32,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 import com.google.android.material.navigation.NavigationBarView
@@ -42,6 +46,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : ComponentActivity() {
+   // @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -54,26 +59,6 @@ class MainActivity : ComponentActivity() {
 }
 
 data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
-
-@ExperimentalMaterial3Api
-@Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    Scaffold(
-        topBar = { TitleBar() },
-        bottomBar = { BottomNavigationBar(navController) },
-        content = { padding ->
-            Box(modifier = Modifier.padding(padding)) {
-                Navigation(navController = navController)
-            }
-        },
-        //backgroundColor = colorResource(R.color.colorPrimaryDark) // Set background color to avoid the white flashing when you switch between screens
-    )
-
-}
-
-
-
 
 
 //
@@ -242,6 +227,8 @@ fun DropdownMenu() {
 }
 */
 
+//#####################################################################
+
 
 
 
@@ -289,6 +276,13 @@ fun DefaultPreview() {
 
 
 
+
+
+
+
+
+
+/*
 //
 //
 @Composable
@@ -340,26 +334,6 @@ fun BottomNavigationBar(navController: NavHostController) {
 fun BottomNavigationBarPreview() {
     BottomNavigationBar()
 }
+*/
 
 
-
-@Composable
-fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination = NavItem.Home.route) {
-        composable(NavItem.Home.route) {
-            Home()
-        }
-        composable(NavItem.Grid.route) {
-            Grid()
-        }
-        composable(NavItem.Favorites.route) {
-            Favorites()
-        }
-        composable(NavItem.News.route) {
-            News()
-        }
-        composable(NavItem.About.route) {
-            About()
-        }
-    }
-}
