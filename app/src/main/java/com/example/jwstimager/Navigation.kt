@@ -2,12 +2,15 @@ package com.example.jwstimager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.BoxScopeInstance.align
+import androidx.compose.foundation.layout.ColumnScopeInstance.align
 //import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -54,11 +57,15 @@ fun Navigation(){
 fun NavBar(navController: NavController) {
 //    Box (Modifier
 //        .requiredHeight(35.dp)
-//        .fillMaxSize()) {
+//        .fillMaxSize()
+//        //.padding(bottom = 200.dp)
+//        .offset(y = (-20).dp)
+//    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeightIn(70.dp)
+                .offset(y = (-20).dp)
 
             // horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -68,7 +75,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_home),
                     contentDescription = "logo",
-                    modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(70.dp, 70.dp)
 
                 )
 
@@ -79,7 +86,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_grid),
                     contentDescription = "logo",
-                    modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(70.dp, 70.dp)
 
                 )
 
@@ -90,7 +97,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_favorites),
                     contentDescription = "logo",
-                    modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(70.dp, 70.dp)
 
                 )
 
@@ -101,7 +108,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_news),
                     contentDescription = "logo",
-                    modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(70.dp, 70.dp)
 
                 )
 
@@ -112,7 +119,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_about),
                     contentDescription = "logo",
-                    modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(70.dp, 70.dp)
 
                 )
 
