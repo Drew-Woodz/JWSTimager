@@ -1,11 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-<<<<<<< HEAD
     id 'kotlin-android'
     id 'kotlin-kapt'
-=======
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
 }
 
 android {
@@ -36,6 +33,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+
+        /*********************************************************************************************************
+         | Duck tape level compile fix
+         | May need some attention later
+         |
+         | Error:
+         | Inheritance from an interface with '@JvmDefault' members is only allowed with -Xjvm-default option
+         | Sources
+         | https://issuetracker.google.com/issues/217593040?pli=1
+         | https://stackoverflow.com/questions/70992947/how-do-i-resolve-error-message-inheritance-from-an-interface-with-jvmdefault
+         *********************************************************************************************************/
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
+        /**********************************************************************************************************/
     }
     buildFeatures {
         compose true
@@ -44,35 +56,17 @@ android {
         kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
-<<<<<<< HEAD
         exclude 'META-INF/atomicfu.kotlin_module'
-=======
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-
-dependencies {
-
-    //implementation 'androidx.core:core-ktx:1.7.0'
-=======
     namespace 'com.example.jwstimager'
 }
 
 dependencies {
-=======
-    namespace 'com.example.jwstimager'
-}
-
-dependencies {
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation 'androidx.core:core-ktx:1.7.0'
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation 'androidx.compose.material3:material3:1.0.0-alpha01'
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
@@ -84,8 +78,12 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+    implementation "androidx.navigation:navigation-compose:2.5.3"
+
+    /****************
+     | For Database |
+     ****************/
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.activity:activity-ktx:$rootProject.activityVersion"
 
@@ -119,12 +117,4 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidxJunitVersion"
-=======
-
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-
-    implementation "androidx.navigation:navigation-compose:2.5.3"
-
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 }
