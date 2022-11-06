@@ -1,21 +1,5 @@
 package com.example.jwstimager
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-import android.os.Bundle
-=======
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.Toast
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -26,7 +10,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.Toast
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -40,61 +23,37 @@ import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import androidx.compose.material3.Button
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import androidx.compose.ui.platform.LocalContext
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-import androidx.compose.ui.platform.LocalContext
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-<<<<<<< HEAD
-<<<<<<< HEAD
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.jwstimager.Database.LinkListAdapter
-=======
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
 import androidx.compose.ui.window.PopupProperties
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
+import androidx.core.graphics.drawable.toBitmap
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-<<<<<<< HEAD
-            /*val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-            val adapter = LinkListAdapter()
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = LinearLayoutManager(this)*/
-=======
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
             JWSTimagerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -105,40 +64,18 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
     }
 }
 
 data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-@Composable
-fun ImageCard(image: ImageData) {
-
-=======
-
-@Composable
-fun ImageCard(image: ImageData) {
-
-    val coroutineScope = rememberCoroutineScope()
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-
 //
 //
 @Composable
 fun ImageCard(image: ImageData) {
 
     val coroutineScope = rememberCoroutineScope()
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
     // keep track of whether or not the image card is expanded
     var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
@@ -155,22 +92,11 @@ fun ImageCard(image: ImageData) {
             .animateContentSize()
             .padding(1.dp)
     ) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        Column(modifier = Modifier.padding(all = 8.dp)) {
-=======
 
         Column(modifier = Modifier.padding(all = 8.dp)) {
 
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-
-        Column(modifier = Modifier.padding(all = 8.dp)) {
-
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
-            Image(
-                painter = painterResource(id = image.rsc_id),
-                contentDescription = "This is a test image of the JWST",
+            AsyncImage(model = image.src_link,
+                contentDescription = image.title,
                 modifier = Modifier
                     //.size(300.dp)
                     //.border(1.5.dp, MaterialTheme.colorScheme.primary)
@@ -178,39 +104,53 @@ fun ImageCard(image: ImageData) {
                     .clickable { isExpanded = !isExpanded }
                     .fillMaxSize()
             )
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 
             val context = LocalContext.current
 
-            Button(modifier = Modifier.align(Alignment.End),
-                onClick={
+            IconButton(modifier = Modifier.align(Alignment.End),
+                onClick = {
+                    // Get image from url
+                    val imageLoader = ImageLoader(context)
+                    val request = ImageRequest.Builder(context)
+                        .data(image.src_link)
+                        .build()
 
-                    context.sharing(image.rsc_id)
-                    /*
-                    val state = painter.state as? AsyncImagePainter.State.Success
-                    val drawable = state?.result?.drawable
-                    if (drawable != null) {
-                        context.shareImage(
-                            "Share image via",
-                            drawable,
-                            "testimage1"
-                        )
+                    coroutineScope.launch {
+                        val drawable = imageLoader.execute(request).drawable
+
+                        //Get Bitmap from imageView
+                        val bitmap = drawable?.toBitmap() // your imageView here.
+
+                        //Compress image
+                        val bytes = ByteArrayOutputStream()
+                        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+
+                        //Save image & get path of it
+                        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "tempimage", null)
+
+                        //Get URI of image
+                        val uri = Uri.parse(path)
+
+                        // activity to share image with Intent
+                        val shareIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
+                            type = "image/png"
+                            putExtra(Intent.EXTRA_STREAM, uri)
+                        }
+
+                        context.startActivity(shareIntent)
                     }
-                    */
-                }
-            ) {
-                Text(text = "Share", color = Color.White)
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Share,
+                        contentDescription = null,
+                        tint = Color.LightGray,
+                        modifier = Modifier.size(20.dp)
+
+                )
             }
 
-
-<<<<<<< HEAD
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
             AnimatedVisibility(visible = isExpanded) {
                 //Spacer(modifier = Modifier.width(8.dp))
 
@@ -235,37 +175,31 @@ fun ImageCard(image: ImageData) {
         }
     }
 }
+/*************************
+| Do we still need this? |
+|       |                |
+|       V                |
+ ************************/
+//
+//
+//fun Context.sharing(imageName: Int){
+//    val b = BitmapFactory.decodeResource(resources, imageName)
+//    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
+//
+//    val uriPath = Uri.parse(path)
+//
+//    val shareIntent = Intent().apply {
+//        action = Intent.ACTION_SEND
+//        putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
+//        type = "image/png"
+//        putExtra(Intent.EXTRA_STREAM, uriPath)
+//    }
+//    startActivity(shareIntent)
+//}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 
 //
 //
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
-fun Context.sharing(imageName: Int){
-    val b = BitmapFactory.decodeResource(resources, imageName)
-    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
-
-    val uriPath = Uri.parse(path)
-
-    val shareIntent = Intent().apply {
-        action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
-        type = "image/png"
-        putExtra(Intent.EXTRA_STREAM, uriPath)
-    }
-    startActivity(shareIntent)
-}
-
-
-<<<<<<< HEAD
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
-//
-//
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 @Composable
 fun ScrollingList(imageList: List<ImageData>) {
     LazyColumn {
@@ -334,36 +268,6 @@ fun DropdownMenu() {
 @Composable
 fun TitleBar() {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Row(modifier = Modifier.padding(all = 8.dp)) {
-=======
-    Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-            Image(
-                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-<<<<<<< HEAD
-            Column() {
-                Text("JWSTimager",
-                    color = Color.White,
-                    textAlign = TextAlign.Justify,
-                    fontSize = 32.sp)
-                // style = MaterialTheme.typography.headlineMedium
-            }
-=======
-            //Column() {
-                Text("JWSTimager",
-                    color = Color.White,
-                    //textAlign = TextAlign.Justify,
-                    fontSize = 32.sp)
-                // style = MaterialTheme.typography.headlineMedium
-            //}
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-=======
     Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
@@ -378,30 +282,12 @@ fun TitleBar() {
             fontSize = 32.sp)
         // style = MaterialTheme.typography.headlineMedium
         //}
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 
     }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    JWSTimagerTheme {
-//        Surface {
-//            MessageCard(msg = Message("John", "Sup Sup. This is a test composable!"))
-//        }
-//    }
-//}
-
-=======
->>>>>>> d4d118328d0829d0b0b9dc3eba8f269dee071f3b
-@Preview(showBackground = true)
-=======
 
 
->>>>>>> 207dd1e8f984e1a953b0058736a922a31cd037c6
 @Composable
 fun DefaultPreview() {
     JWSTimagerTheme {
