@@ -64,7 +64,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Navigation()
-
                 }
             }
         }
@@ -86,11 +85,11 @@ fun ImageCard(image: ImageData) {
     val surfaceColor by animateColorAsState(
         if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
     )
-    Surface(
+    Box(
         //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
-        shadowElevation = 1.dp,
+        //shadowElevation = 1.dp,
         // surfaceColor color will be changing gradually from primary to surface
-        color = surfaceColor,
+        //color = surfaceColor,
         // animateContentSize will change the Surface size gradually
         modifier = Modifier
             .animateContentSize()
