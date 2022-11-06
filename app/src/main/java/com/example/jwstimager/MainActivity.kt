@@ -43,10 +43,13 @@ import androidx.compose.ui.unit.sp
 import com.example.jwstimager.Database.LinkListAdapter
 import androidx.compose.ui.window.PopupProperties
 import androidx.core.graphics.drawable.toBitmap
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -61,6 +64,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Navigation()
+
                 }
             }
         }
@@ -273,7 +277,6 @@ fun TitleBar() {
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "logo",
             modifier = Modifier.size(70.dp, 70.dp)
-
         )
         //Column() {
         Text("JWSTimager",
@@ -288,6 +291,53 @@ fun TitleBar() {
 
 
 
+/*************************
+|   Navigation Buttons   |
+|                        |
+|                        |
+ ************************/
+@Composable
+fun HomeButton(
+
+
+){
+
+}
+
+
+
+
+
+@Composable
+fun GridButton(
+    navController: NavController
+) {
+
+}
+@Composable
+fun FavoritesButton(
+    navController: NavController
+
+){
+
+}
+
+@Composable
+fun NewsButton(
+    navController: NavController
+) {
+
+}
+@Composable
+fun AboutButton(
+    navController: NavController
+){
+
+}
+
+
+
+/*
 @Composable
 fun DefaultPreview() {
     JWSTimagerTheme {
@@ -306,3 +356,4 @@ fun DefaultPreview() {
 
     }
 }
+*/
