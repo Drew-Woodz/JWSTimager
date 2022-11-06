@@ -2,6 +2,7 @@ package com.example.jwstimager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+//import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -23,7 +24,73 @@ fun Navigation(){
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
         composable(route = Screen.HomeScreen.route){
             HomeScreen()
-            
+            Box {
+                Modifier
+                    .requiredHeight(35.dp)
+
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+
+                    // horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    //*##############Home NAV Button##############*//
+                    Button(onClick = { navController.navigate("HomeScreen") }) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_home),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(70.dp, 70.dp)
+
+                        )
+
+                    }
+                    //*##############Grid NAV Button##############*//
+                    Button(onClick = { navController.navigate("GridScreen") }) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_grid),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(70.dp, 70.dp)
+
+                        )
+
+                    }
+                    //*##############Grid NAV Button##############*//
+                    Button(onClick = { navController.navigate("FavoritesScreen") }) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_favorites),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(70.dp, 70.dp)
+
+                        )
+
+                    }
+                    //*##############Grid NAV Button##############*//
+                    Button(onClick = { navController.navigate("NewsScreen") }) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_news),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(70.dp, 70.dp)
+
+                        )
+
+                    }
+                    //*##############Grid NAV Button##############*//
+                    Button(onClick = { navController.navigate("AboutScreen") }) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_about),
+                            contentDescription = "logo",
+                            modifier = Modifier.size(70.dp, 70.dp)
+
+                        )
+
+                    }
+
+                }
+            }
 
         }
 
@@ -150,67 +217,3 @@ fun AboutScreen(){
 
 }
 
-@Composable
-fun BottomBar(navController: NavController){
-    Row(
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ){
-        //*##############Home NAV Button##############*//
-        Button(onClick = { navController.navigate("HomeScreen") }) {
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_home),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-
-        }
-        //*##############Grid NAV Button##############*//
-        Button(onClick = { navController.navigate("GridScreen") }) {
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_grid),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-
-        }
-        //*##############Grid NAV Button##############*//
-        Button(onClick = { navController.navigate("FavoritesScreen") }) {
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_favorites),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-
-        }
-        //*##############Grid NAV Button##############*//
-        Button(onClick = { navController.navigate("NewsScreen") }) {
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_news),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-
-        }
-        //*##############Grid NAV Button##############*//
-        Button(onClick = { navController.navigate("AboutScreen") }) {
-
-            Image(
-                painter = painterResource(id = R.drawable.ic_about),
-                contentDescription = "logo",
-                modifier = Modifier.size(70.dp, 70.dp)
-
-            )
-
-        }
-
-    }
-
-}

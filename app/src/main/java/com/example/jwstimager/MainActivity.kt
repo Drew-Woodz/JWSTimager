@@ -291,51 +291,6 @@ fun TitleBar() {
 
 
 
-/*************************
-|   Navigation Buttons   |
-|                        |
-|                        |
- ************************/
-@Composable
-fun HomeButton(
-
-
-){
-
-}
-
-
-
-
-
-@Composable
-fun GridButton(
-    navController: NavController
-) {
-
-}
-@Composable
-fun FavoritesButton(
-    navController: NavController
-
-){
-
-}
-
-@Composable
-fun NewsButton(
-    navController: NavController
-) {
-
-}
-@Composable
-fun AboutButton(
-    navController: NavController
-){
-
-}
-
-
 
 /*
 @Composable
