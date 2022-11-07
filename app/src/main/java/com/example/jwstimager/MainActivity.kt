@@ -25,6 +25,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -159,7 +160,7 @@ fun ImageCard(image: ImageData) {
                     image.isFavorite = true
                 }
                 else {
-                    favIcon = Icons.Filled.CheckCircle
+                    favIcon = Icons.Rounded.Add
                     image.isFavorite = false
                 }
                 Icon(
@@ -193,7 +194,7 @@ fun ImageCard(image: ImageData) {
 @Composable
 fun GalleryImageCard(image: ImageData) {
 
-    var isFavorite by remember { mutableStateOf(false) }
+    var isSelected by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .animateContentSize()
@@ -205,7 +206,7 @@ fun GalleryImageCard(image: ImageData) {
                 //.size(300.dp)
                 //.border(1.5.dp, MaterialTheme.colorScheme.primary)
                 //toggle is expanded by clicking on the image
-                .clickable { isFavorite = !isFavorite }
+                .clickable { isSelected = !isSelected }
         )
 
 
@@ -215,25 +216,22 @@ fun GalleryImageCard(image: ImageData) {
         ) {
             val context = LocalContext.current
             IconButton(
-                onClick = { isFavorite = !isFavorite }
+                onClick = { isSelected = !isSelected }
             ) {
-                if (isFavorite) {
+                if (isSelected) {
                     Icon(
-                        imageVector = Icons.Filled.Check,
+                        imageVector = Icons.Filled.CheckCircle,
                         contentDescription = null,
                         tint = Color.LightGray,
                         modifier = Modifier.size(25.dp)
                     )
-                    image.isFavorite = true
-                }
-                else {
-                    image.isFavorite = false
                 }
 
             }
         }
     }
 }
+
 
 
 //
