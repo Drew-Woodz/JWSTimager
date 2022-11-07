@@ -2,14 +2,11 @@ package com.example.jwstimager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.items
 //import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -239,7 +236,7 @@ fun AboutScreen(){
         ) {
             Column {
                 TitleBar()
-                AboutCards()
+                AboutPage()
 
             }
         }

@@ -28,8 +28,8 @@
     <string name="jadrien_email">jadrien.hannon419@myci.csuci.edu</string>
 
     //maker emails
-    <string name="declan_linkin">https://www.linkedin.com/in/declan-dury-99a5481bb/</string>
-    <string name="andrew_linkin">https://www.linkedin.com/in/andrewllockwood/</string>
-    <string name="emmanuel_linkin">TODO</string>
-    <string name="jadrien_linkin">TODO</string>
+    <string name="declan_linkedin">https://www.linkedin.com/in/declan-dury-99a5481bb/</string>
+    <string name="andrew_linkedin">https://www.linkedin.com/in/andrewllockwood/</string>
+    <string name="emmanuel_linkedin">TODO</string>
+    <string name="jadrien_linkedin">TODO</string>
 </resources>
