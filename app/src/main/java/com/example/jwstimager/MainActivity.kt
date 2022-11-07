@@ -1,15 +1,14 @@
 package com.example.jwstimager
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.MenuItem
-import android.widget.Toast
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.util.Patterns
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -19,37 +18,29 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.jwstimager.Database.LinkListAdapter
-import androidx.compose.ui.window.PopupProperties
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.core.text.util.LinkifyCompat
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
-import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -199,6 +190,88 @@ fun ImageCard(image: ImageData) {
 //    }
 //    startActivity(shareIntent)
 //}
+
+@Composable
+fun AboutCards() {
+    Column(){
+        Text(
+            text = "About Us",
+            modifier = Modifier
+                .padding(10.dp)
+                .align(Alignment.CenterHorizontally)
+
+        )
+    }
+
+    LazyColumn(
+
+    ) {
+    }
+    Box(// Andrew
+        modifier = Modifier
+        .padding(10.dp))
+    {
+        Column() {
+            Text(text = androidx.compose.ui.res.stringResource(R.string.nameAndrew),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.about_andrew),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.andrew_email),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.andrew_linkin),
+                modifier = Modifier.padding(10.dp))
+        }
+    }
+    //
+    Box(// Declan
+        modifier = Modifier
+            .padding(10.dp))
+    {
+        Column() {
+            Text(text = androidx.compose.ui.res.stringResource(R.string.nameDeclan),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.about_declan),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.declan_email),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.declan_email),
+                modifier = Modifier.padding(10.dp))
+        }
+    }
+    //
+    Box(// Emmanuel
+        modifier = Modifier
+            .padding(10.dp))
+    {
+        Column() {
+            Text(text = androidx.compose.ui.res.stringResource(R.string.nameEmmanuel),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.about_emmanuel),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.emmanuel_email),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.emmanuel_linkin),
+                modifier = Modifier.padding(10.dp))
+        }
+    }
+    //
+    Box(// Jadrien
+        modifier = Modifier
+            .padding(10.dp))
+    {
+        Column() {
+            Text(text = androidx.compose.ui.res.stringResource(R.string.nameJadrien),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.about_jadrien),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.jadrien_email),
+                modifier = Modifier.padding(10.dp))
+            Text(text = androidx.compose.ui.res.stringResource(R.string.jadrien_linkin),
+                modifier = Modifier.padding(10.dp))
+        }
+    }
+
+}
 
 
 //
