@@ -43,10 +43,13 @@ import androidx.compose.ui.unit.sp
 import com.example.jwstimager.Database.LinkListAdapter
 import androidx.compose.ui.window.PopupProperties
 import androidx.core.graphics.drawable.toBitmap
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -82,11 +85,11 @@ fun ImageCard(image: ImageData) {
     val surfaceColor by animateColorAsState(
         if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
     )
-    Surface(
+    Box(
         //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
-        shadowElevation = 1.dp,
+        //shadowElevation = 1.dp,
         // surfaceColor color will be changing gradually from primary to surface
-        color = surfaceColor,
+        //color = surfaceColor,
         // animateContentSize will change the Surface size gradually
         modifier = Modifier
             .animateContentSize()
@@ -273,7 +276,6 @@ fun TitleBar() {
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "logo",
             modifier = Modifier.size(70.dp, 70.dp)
-
         )
         //Column() {
         Text("JWSTimager",
@@ -288,6 +290,8 @@ fun TitleBar() {
 
 
 
+
+/*
 @Composable
 fun DefaultPreview() {
     JWSTimagerTheme {
@@ -306,3 +310,4 @@ fun DefaultPreview() {
 
     }
 }
+*/
