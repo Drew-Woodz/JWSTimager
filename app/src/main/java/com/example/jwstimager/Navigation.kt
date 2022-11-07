@@ -2,8 +2,6 @@ package com.example.jwstimager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.BoxScopeInstance.align
-import androidx.compose.foundation.layout.ColumnScopeInstance.align
 //import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -31,19 +29,19 @@ fun Navigation(){
     ) {
         NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
             composable(route = Screen.HomeScreen.route) {
-                HomeScreen(navController)
+                HomeScreen()
             }
             composable(Screen.GridScreen.route) {
-                GridScreen(navController = navController)
+                GridScreen()
             }
             composable(Screen.FavoritesScreen.route) {
-                FavoritesScreen(navController = navController)
+                FavoritesScreen()
             }
             composable(Screen.NewsScreen.route) {
-                NewsScreen(navController = navController)
+                NewsScreen()
             }
             composable(Screen.AboutScreen.route) {
-                AboutScreen(navController = navController)
+                AboutScreen()
             }
         }
         NavBar(navController = navController)
@@ -130,7 +128,7 @@ fun NavBar(navController: NavController) {
 }
 
 @Composable
-fun HomeScreen(navController: NavController){
+fun HomeScreen(){
 
     JWSTimagerTheme {
         Surface(
@@ -153,7 +151,7 @@ fun HomeScreen(navController: NavController){
 //
 //
 @Composable
-fun GridScreen(navController: NavController){
+fun GridScreen(){
 
     JWSTimagerTheme {
         Surface(
@@ -175,7 +173,7 @@ fun GridScreen(navController: NavController){
 //
 //
 @Composable
-fun FavoritesScreen(navController: NavController){
+fun FavoritesScreen(){
 
     JWSTimagerTheme {
         Surface(
@@ -200,7 +198,7 @@ fun FavoritesScreen(navController: NavController){
 //
 //
 @Composable
-fun NewsScreen(navController: NavController){
+fun NewsScreen(){
 
     JWSTimagerTheme {
         Surface(
@@ -225,7 +223,7 @@ fun NewsScreen(navController: NavController){
 //
 //
 @Composable
-fun AboutScreen(navController: NavController){
+fun AboutScreen(){
 
     JWSTimagerTheme {
         Surface(
