@@ -239,7 +239,7 @@ fun AboutScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                AboutCards()
 
             }
         }
