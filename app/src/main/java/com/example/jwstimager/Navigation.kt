@@ -2,6 +2,7 @@ package com.example.jwstimager
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.items
 //import androidx.compose.foundation.layout.RowScopeInstance.align
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -143,8 +144,6 @@ fun HomeScreen(){
 
 
     }
-
-
 }
 
 
@@ -175,6 +174,15 @@ fun GridScreen(){
 @Composable
 fun FavoritesScreen(){
 
+// Didn't seem to work
+//    var favorites: MutableList<ImageData> = mutableListOf()
+//    SampleData.sampleImageList.forEach { image ->
+//        if (image.isFavorite)
+//        {
+//            favorites.add(image)
+//        }
+//    }
+
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -182,8 +190,7 @@ fun FavoritesScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
-
+                ScrollingList(imageList = SampleFavorites.sampleImageList)
             }
         }
 
