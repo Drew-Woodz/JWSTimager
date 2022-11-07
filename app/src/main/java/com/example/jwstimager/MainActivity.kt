@@ -190,6 +190,51 @@ fun ImageCard(image: ImageData) {
         }
 }
 
+@Composable
+fun GalleryImageCard(image: ImageData) {
+
+    var isFavorite by remember { mutableStateOf(false) }
+    Box(
+        modifier = Modifier
+            .animateContentSize()
+            .padding(all = 8.dp)
+    ) {
+        AsyncImage(model = image.src_link,
+            contentDescription = image.title,
+            modifier = Modifier
+                //.size(300.dp)
+                //.border(1.5.dp, MaterialTheme.colorScheme.primary)
+                //toggle is expanded by clicking on the image
+                .clickable { isFavorite = !isFavorite }
+        )
+
+
+        Box(
+            Modifier.fillMaxSize().padding(12.dp).offset(y = 60.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            val context = LocalContext.current
+            IconButton(
+                onClick = { isFavorite = !isFavorite }
+            ) {
+                if (isFavorite) {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = null,
+                        tint = Color.LightGray,
+                        modifier = Modifier.size(25.dp)
+                    )
+                    image.isFavorite = true
+                }
+                else {
+                    image.isFavorite = false
+                }
+
+            }
+        }
+    }
+}
+
 
 //
 //
@@ -213,7 +258,7 @@ internal fun ScrollingGridList(imageList: List<ImageData>){
             cells = GridCells.Fixed(2),
             content = {
                 items(imageList) { image ->
-                    ImageCard(image)
+                    GalleryImageCard(image)
                 }
             }
         )
