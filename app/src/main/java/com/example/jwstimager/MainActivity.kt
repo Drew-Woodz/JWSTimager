@@ -5,17 +5,13 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.method.LinkMovementMethod
-import android.text.util.Linkify
-import android.util.Patterns
-import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
@@ -30,17 +26,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.text.util.LinkifyCompat
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -91,7 +83,9 @@ fun ImageCard(image: ImageData) {
         )
 
         Box(
-            Modifier.fillMaxSize().padding(12.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(12.dp),
             contentAlignment = Alignment.BottomEnd
         ) {
             val context = LocalContext.current
@@ -141,7 +135,10 @@ fun ImageCard(image: ImageData) {
         }
 
         Box(
-            Modifier.fillMaxSize().padding(12.dp).offset(y = 60.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+                .offset(y = 60.dp),
             contentAlignment = Alignment.TopEnd
         ) {
             val context = LocalContext.current
@@ -206,7 +203,10 @@ fun GalleryImageCard(image: ImageData) {
 
 
         Box(
-            Modifier.fillMaxSize().padding(12.dp).offset(y = 60.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+                .offset(y = 60.dp),
             contentAlignment = Alignment.TopEnd
         ) {
             val context = LocalContext.current
@@ -227,87 +227,95 @@ fun GalleryImageCard(image: ImageData) {
     }
 }
 
+data class AboutData(
+    val name: String,
+    val aboutText: String,
+    val email: String,
+    val linkedin: String
+)
 
 @Composable
-fun AboutCards() {
-    Column(){
+fun AboutCard(aboutEntry: AboutData) {
+    Box(
+        modifier = Modifier
+            .padding(10.dp)
+            .border(1.5.dp, MaterialTheme.colorScheme.primary)
+    )
+    {
+        Column() {
+            Text(text = aboutEntry.name,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(10.dp))
+            Text(text = aboutEntry.aboutText,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(10.dp))
+            Text(text = aboutEntry.email,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(10.dp))
+            Text(text = aboutEntry.linkedin,
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+
+@Composable
+fun AboutPage() {
+
+    val aboutEntryList = listOf<AboutData>(
+        AboutData(
+            name = androidx.compose.ui.res.stringResource(R.string.nameAndrew),
+            aboutText = androidx.compose.ui.res.stringResource(R.string.about_andrew),
+            email = androidx.compose.ui.res.stringResource(R.string.andrew_email),
+            linkedin = androidx.compose.ui.res.stringResource(R.string.andrew_linkedin),
+        ),
+        AboutData(
+            name = androidx.compose.ui.res.stringResource(R.string.nameDeclan),
+            aboutText = androidx.compose.ui.res.stringResource(R.string.about_declan),
+            email = androidx.compose.ui.res.stringResource(R.string.declan_email),
+            linkedin = androidx.compose.ui.res.stringResource(R.string.declan_linkedin),
+        ),
+        AboutData(
+            name = androidx.compose.ui.res.stringResource(R.string.nameEmmanuel),
+            aboutText = androidx.compose.ui.res.stringResource(R.string.about_emmanuel),
+            email = androidx.compose.ui.res.stringResource(R.string.emmanuel_email),
+            linkedin = androidx.compose.ui.res.stringResource(R.string.emmanuel_linkedin),
+        ),
+
+        AboutData(
+            name = androidx.compose.ui.res.stringResource(R.string.nameJadrien),
+            aboutText = androidx.compose.ui.res.stringResource(R.string.about_jadrien),
+            email = androidx.compose.ui.res.stringResource(R.string.jadrien_email),
+            linkedin = androidx.compose.ui.res.stringResource(R.string.jadrien_linkedin),
+        )
+    )
+    Column() {
         Text(
             text = "About Us",
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(10.dp)
                 .align(Alignment.CenterHorizontally)
 
         )
-    }
+        LazyColumn {
+            items(aboutEntryList) { entry ->
+                AboutCard(entry)
+            }
 
-    LazyColumn(
+        }
 
-    ) {
-    }
-    Box(// Andrew
-        modifier = Modifier
-        .padding(10.dp))
-    {
-        Column() {
-            Text(text = androidx.compose.ui.res.stringResource(R.string.nameAndrew),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.about_andrew),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.andrew_email),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.andrew_linkin),
-                modifier = Modifier.padding(10.dp))
-        }
-    }
-    //
-    Box(// Declan
-        modifier = Modifier
-            .padding(10.dp))
-    {
-        Column() {
-            Text(text = androidx.compose.ui.res.stringResource(R.string.nameDeclan),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.about_declan),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.declan_email),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.declan_email),
-                modifier = Modifier.padding(10.dp))
-        }
-    }
-    //
-    Box(// Emmanuel
-        modifier = Modifier
-            .padding(10.dp))
-    {
-        Column() {
-            Text(text = androidx.compose.ui.res.stringResource(R.string.nameEmmanuel),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.about_emmanuel),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.emmanuel_email),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.emmanuel_linkin),
-                modifier = Modifier.padding(10.dp))
-        }
-    }
-    //
-    Box(// Jadrien
-        modifier = Modifier
-            .padding(10.dp))
-    {
-        Column() {
-            Text(text = androidx.compose.ui.res.stringResource(R.string.nameJadrien),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.about_jadrien),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.jadrien_email),
-                modifier = Modifier.padding(10.dp))
-            Text(text = androidx.compose.ui.res.stringResource(R.string.jadrien_linkin),
-                modifier = Modifier.padding(10.dp))
-        }
-    }
+        // Andrew
 
+        // Declan
+
+        // Emmanuel
+
+        // Jadrien
+
+    }
 }
 
 
@@ -327,16 +335,16 @@ fun ScrollingList(imageList: List<ImageData>) {
 //
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ScrollingGridList(imageList: List<ImageData>){
+internal fun ScrollingGridList(imageList: List<ImageData>) {
 
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            content = {
-                items(imageList) { image ->
-                    GalleryImageCard(image)
-                }
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(2),
+        content = {
+            items(imageList) { image ->
+                GalleryImageCard(image)
             }
-        )
+        }
+    )
 
 }
 
@@ -346,8 +354,8 @@ internal fun ScrollingGridList(imageList: List<ImageData>){
 //
 @Composable
 fun rememberLazyGridState(
-    initialFirstVisibleItemIndex: Int = 0,
-    initialFirstVisibleItemScrollOffset: Int = 0
+initialFirstVisibleItemIndex: Int = 0,
+initialFirstVisibleItemScrollOffset: Int = 0
 ): LazyGridState {}
 */
 
@@ -356,20 +364,20 @@ fun rememberLazyGridState(
 //
 @Composable
 fun DropdownMenu() {
-    var expanded by remember { mutableStateOf(false)}
-    val list = listOf("List","Grid","News","About")
-    var selectedItem by remember { mutableStateOf( "")}
-    var textFiledSize by remember { mutableStateOf(Size.Zero)}
-    val icon = if (expanded){
-        Icons.Filled.KeyboardArrowUp
-    }else {
-        Icons.Filled.KeyboardArrowDown
-    }
+var expanded by remember { mutableStateOf(false)}
+val list = listOf("List","Grid","News","About")
+var selectedItem by remember { mutableStateOf( "")}
+var textFiledSize by remember { mutableStateOf(Size.Zero)}
+val icon = if (expanded){
+    Icons.Filled.KeyboardArrowUp
+}else {
+    Icons.Filled.KeyboardArrowDown
+}
 
-    Column(modifier = Modifier.padding(20.dp)) {
+Column(modifier = Modifier.padding(20.dp)) {
 
 
-    }
+}
 
 }
 */
@@ -381,7 +389,8 @@ fun DropdownMenu() {
 @Composable
 fun TitleBar() {
 
-    Row(modifier = Modifier.padding(all = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = Modifier.padding(all = 8.dp),
+        verticalAlignment = Alignment.CenterVertically) {
         Image(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "logo",
@@ -397,6 +406,7 @@ fun TitleBar() {
 
     }
 }
+
 
 
 
