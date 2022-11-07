@@ -24,16 +24,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -71,46 +70,36 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class ImageData(val title: String, val src_link: String, val rsc_id: Int)
-
 //
 //
 @Composable
 fun ImageCard(image: ImageData) {
 
     val coroutineScope = rememberCoroutineScope()
+    var isFavorite by remember { mutableStateOf(false) }
     // keep track of whether or not the image card is expanded
     var isExpanded by remember { mutableStateOf(false) }
     // surfaceColor will be updated gradually from one color to the other
-    val surfaceColor by animateColorAsState(
-        if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
-    )
     Box(
-        //shape = MaterialTheme.shapes.medium, // couldn't add shape to surface
-        //shadowElevation = 1.dp,
-        // surfaceColor color will be changing gradually from primary to surface
-        //color = surfaceColor,
-        // animateContentSize will change the Surface size gradually
         modifier = Modifier
             .animateContentSize()
-            .padding(1.dp)
+            .padding(all = 8.dp)
     ) {
+        AsyncImage(model = image.src_link,
+            contentDescription = image.title,
+            modifier = Modifier
+                //.size(300.dp)
+                //.border(1.5.dp, MaterialTheme.colorScheme.primary)
+                //toggle is expanded by clicking on the image
+                .clickable { isExpanded = !isExpanded }
+        )
 
-        Column(modifier = Modifier.padding(all = 8.dp)) {
-
-            AsyncImage(model = image.src_link,
-                contentDescription = image.title,
-                modifier = Modifier
-                    //.size(300.dp)
-                    //.border(1.5.dp, MaterialTheme.colorScheme.primary)
-                    //toggle is expanded by clicking on the image
-                    .clickable { isExpanded = !isExpanded }
-                    .fillMaxSize()
-            )
-
+        Box(
+            Modifier.fillMaxSize().padding(12.dp),
+            contentAlignment = Alignment.BottomEnd
+        ) {
             val context = LocalContext.current
-
-            IconButton(modifier = Modifier.align(Alignment.End),
+            IconButton(
                 onClick = {
                     // Get image from url
                     val imageLoader = ImageLoader(context)
@@ -144,20 +133,49 @@ fun ImageCard(image: ImageData) {
 
                         context.startActivity(shareIntent)
                     }
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.Share,
-                        contentDescription = null,
-                        tint = Color.LightGray,
-                        modifier = Modifier.size(20.dp)
-
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Share,
+                    contentDescription = null,
+                    tint = Color.LightGray,
+                    modifier = Modifier.size(25.dp)
                 )
             }
+        }
+
+        Box(
+            Modifier.fillMaxSize().padding(12.dp).offset(y = 60.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            val context = LocalContext.current
+            IconButton(
+                onClick = { isFavorite = !isFavorite }
+            ) {
+
+                var favIcon: ImageVector
+                if (isFavorite) {
+                    favIcon = Icons.Filled.Check
+                    image.isFavorite = true
+                }
+                else {
+                    favIcon = Icons.Filled.CheckCircle
+                    image.isFavorite = false
+                }
+                Icon(
+                    imageVector = favIcon,
+                    contentDescription = null,
+                    tint = Color.LightGray,
+                    modifier = Modifier.size(25.dp)
+                )
+            }
+        }
+
 
             AnimatedVisibility(visible = isExpanded) {
                 //Spacer(modifier = Modifier.width(8.dp))
 
-                Row (
+                Box (
                     Modifier
                         .wrapContentWidth()
                         .padding(all = 4.dp)
@@ -167,38 +185,10 @@ fun ImageCard(image: ImageData) {
                         color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.titleSmall
                     )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = image.src_link,
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
                 }
             }
         }
-    }
 }
-/*************************
-| Do we still need this? |
-|       |                |
-|       V                |
- ************************/
-//
-//
-//fun Context.sharing(imageName: Int){
-//    val b = BitmapFactory.decodeResource(resources, imageName)
-//    val path = MediaStore.Images.Media.insertImage(contentResolver, b, "Image", null )
-//
-//    val uriPath = Uri.parse(path)
-//
-//    val shareIntent = Intent().apply {
-//        action = Intent.ACTION_SEND
-//        putExtra(Intent.EXTRA_TEXT, "From JWST Imager App")
-//        type = "image/png"
-//        putExtra(Intent.EXTRA_STREAM, uriPath)
-//    }
-//    startActivity(shareIntent)
-//}
 
 
 //
