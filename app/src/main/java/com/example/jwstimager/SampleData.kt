@@ -3,53 +3,57 @@ package com.example.jwstimager
 object SampleData {
     val sampleImageList = listOf<ImageData>(
         ImageData(
-            "JWST in Space",
-            "https://webbtelescope.org/contents/media/images/01GEJB2906TM9VR2FSJ4TFMNQM",
-            R.drawable.testimage1
+            "testimage1",
+            "https://stsci-opo.org/STScI-01GEPRPYZKGEY9GT152DEK45GC.png",
+            R.drawable.testimage1,
+            isFavorite = true
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/01GE08V9XSG17V7Q6YS4DTMJQH",
+            "testimage2",
+            "https://stsci-opo.org/STScI-01GE098MJC0G4MMFA81FZG31RX.png",
             R.drawable.testimage2
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/01GE069WGDQHSYJJ3CS09XHRW9",
-            R.drawable.testimage3
+            "testimage3",
+            "https://stsci-opo.org/STScI-01GE0993DBCZXEBR2ZH5JAHTT6.png",
+            R.drawable.testimage3,
+            isFavorite = true
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/047/01GE2B5TF1HQQT5MPPQ9JY750E",
+            "testimage4",
+            "https://stsci-opo.org/STScI-01GE2ZKA7VW6BHV3VNBNAPQME6.png",
             R.drawable.testimage4
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/047/01GE39QQCQ52JSF02RYJYCHH7J",
-            R.drawable.testimage5
+            "testimage5",
+            "https://stsci-opo.org/STScI-01GE4RT3Z3320M9PNTDC6HA61Z.png",
+            R.drawable.testimage5,
+            isFavorite = true
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/047/01GE31KCDNED8WEFMSME6ZX5PZ",
+            "testimage6",
+            "https://stsci-opo.org/STScI-01GE4S36XEK01WHMKZDGPG4GFZ.png",
             R.drawable.testimage6
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/047/01GE38PZVNK8A0MQC0B4KDSKZ0",
-            R.drawable.testimage7
+            "testimage7",
+            "https://stsci-opo.org/STScI-01GE4S6N3N84QZRG8J68D1V2Q5.png",
+            R.drawable.testimage7,
+            isFavorite = true
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/046/01GCCV8F0SPYKD6Q7T513CTKGC",
+            "testimage8",
+            "https://stsci-opo.org/STScI-01GCCV90ETRGPQSGFSAP6W1E7F.png",
             R.drawable.testimage8
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/046/01GCCVN1Q7285741KZV1M4WEC8",
+            "testimage9",
+            "https://stsci-opo.org/STScI-01GF42D0KV99R21EAD1RAZ3JB7.png",
             R.drawable.testimage9
         ),
         ImageData(
-            "Test Image 1",
-            "https://webbtelescope.org/contents/media/images/2022/046/01GCVNBC11Z11KDTJ5CFGTMX72",
+            "testimage10",
+            "https://stsci-opo.org/STScI-01GCVNBND6RJ9360JKJ1G86Q0V.png",
             R.drawable.testimage10
         )
     )
