@@ -9,10 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.lazy.GridCells
@@ -27,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -39,11 +37,13 @@ import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            com.example.jwstimager.News()
             JWSTimagerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -71,7 +71,9 @@ fun ImageCard(image: ImageData) {
     Box(
         modifier = Modifier
             .animateContentSize()
+            .fillMaxSize()
             .padding(all = 8.dp)
+            .background(color = MaterialTheme.colorScheme.tertiary)
     ) {
         AsyncImage(model = image.src_link,
             contentDescription = image.title,
@@ -81,7 +83,9 @@ fun ImageCard(image: ImageData) {
                 //toggle is expanded by clicking on the image
                 .clickable { isExpanded = !isExpanded }
         )
-
+        /***************
+        |*share button*|
+        ***************/
         Box(
             Modifier
                 .fillMaxSize()
@@ -134,10 +138,13 @@ fun ImageCard(image: ImageData) {
             }
         }
 
+        /******************
+        |*Favorite Button*|
+        ******************/
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                //.padding(1.dp)
                 .offset(y = 60.dp),
             contentAlignment = Alignment.TopEnd
         ) {
@@ -163,15 +170,18 @@ fun ImageCard(image: ImageData) {
                 )
             }
         }
-
+        /******************
+        |* Expanded View *|
+         ******************/
 
             AnimatedVisibility(visible = isExpanded) {
-                //Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
                 Box (
                     Modifier
                         .wrapContentWidth()
                         .padding(all = 4.dp)
+                        //background(color = MaterialTheme.colorScheme.tertiary)
                 ){
                     Text(
                         text = image.title,
@@ -191,6 +201,7 @@ fun GalleryImageCard(image: ImageData) {
         modifier = Modifier
             .animateContentSize()
             .padding(all = 8.dp)
+
     ) {
         AsyncImage(model = image.src_link,
             contentDescription = image.title,
@@ -264,25 +275,28 @@ fun AboutCard(aboutEntry: AboutData) {
 fun AboutPage() {
 
     val aboutEntryList = listOf<AboutData>(
+        //Andrew
         AboutData(
             name = androidx.compose.ui.res.stringResource(R.string.nameAndrew),
             aboutText = androidx.compose.ui.res.stringResource(R.string.about_andrew),
             email = androidx.compose.ui.res.stringResource(R.string.andrew_email),
             linkedin = androidx.compose.ui.res.stringResource(R.string.andrew_linkedin),
         ),
+        //Declan
         AboutData(
             name = androidx.compose.ui.res.stringResource(R.string.nameDeclan),
             aboutText = androidx.compose.ui.res.stringResource(R.string.about_declan),
             email = androidx.compose.ui.res.stringResource(R.string.declan_email),
             linkedin = androidx.compose.ui.res.stringResource(R.string.declan_linkedin),
         ),
+        //Emmanuel
         AboutData(
             name = androidx.compose.ui.res.stringResource(R.string.nameEmmanuel),
             aboutText = androidx.compose.ui.res.stringResource(R.string.about_emmanuel),
             email = androidx.compose.ui.res.stringResource(R.string.emmanuel_email),
             linkedin = androidx.compose.ui.res.stringResource(R.string.emmanuel_linkedin),
         ),
-
+        //Jadrien
         AboutData(
             name = androidx.compose.ui.res.stringResource(R.string.nameJadrien),
             aboutText = androidx.compose.ui.res.stringResource(R.string.about_jadrien),
@@ -307,13 +321,7 @@ fun AboutPage() {
 
         }
 
-        // Andrew
 
-        // Declan
-
-        // Emmanuel
-
-        // Jadrien
 
     }
 }
@@ -365,7 +373,7 @@ initialFirstVisibleItemScrollOffset: Int = 0
 @Composable
 fun DropdownMenu() {
 var expanded by remember { mutableStateOf(false)}
-val list = listOf("List","Grid","News","About")
+val list = listOf("List","Grid","News.java","About")
 var selectedItem by remember { mutableStateOf( "")}
 var textFiledSize by remember { mutableStateOf(Size.Zero)}
 val icon = if (expanded){

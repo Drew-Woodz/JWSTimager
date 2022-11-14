@@ -18,7 +18,7 @@ object IconData {
             R.drawable.ic_launcher_background
         ),
         ImageData(
-            "News",
+            "News.java",
             "JWSTimager",
             R.drawable.ic_launcher_background
         ),
