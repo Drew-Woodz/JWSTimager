@@ -135,7 +135,7 @@ fun HomeScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                ScrollingImageList(imageList = SampleData.sampleImageList)
             }
         }
 
@@ -187,7 +187,7 @@ fun FavoritesScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleFavorites.sampleImageList)
+                ScrollingImageList(imageList = SampleFavorites.sampleImageList)
             }
         }
 
@@ -211,7 +211,7 @@ fun NewsScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                ScrollingNewsList(postList = )
 
             }
         }
