@@ -37,7 +37,6 @@ import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.jwstimager.model.Feed
-import com.example.jwstimager.model.entry.Entry
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 import kotlinx.coroutines.launch
 
@@ -46,6 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory.*
 import java.io.ByteArrayOutputStream
 import java.lang.IndexOutOfBoundsException
 import java.lang.NullPointerException
@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(SimpleXmlConverterFactory.create())
+                .addConverterFactory(create())
                 .build()
             val feedAPI = retrofit.create(FeedAPI::class.java)
             val call = feedAPI.feed
@@ -89,6 +89,8 @@ class MainActivity : ComponentActivity() {
                             postContent.add(null)
                             Log.e(TAG, "onResponse: IndexOutOfBoundsException(thumbnail):" + e.message)
                         }
+
+                        //var postList = mutableListOf<Post>()
                         val lastPosition = postContent.size - 1
                         posts.add(
                             Post(
@@ -110,6 +112,7 @@ class MainActivity : ComponentActivity() {
                         updated: ${posts[j].date_updated}
                         """
                         )
+
                     }
                 }
 
@@ -141,7 +144,7 @@ class MainActivity : ComponentActivity() {
 //
 //
 @Composable
-fun NewsCard(post : Post){
+fun NewsCard(posts: ArrayList<Post>){
 
     Box(Modifier.fillMaxWidth()){
         Column(){
@@ -155,28 +158,28 @@ fun NewsCard(post : Post){
                     Row(){
                         Column(){
                             //thumbnail
-                            coil.compose.AsyncImage(model = post.thumbnailURL,
-                                contentDescription = post.title,
+                            AsyncImage(model = posts.thumbnailURL,
+                                contentDescription = posts.title,
                                 modifier = Modifier
                             )
                         }
                         Column(){
                             //title <-link
                             Text(
-                                text = post.title
+                                text = posts.title
                             )
                         }
                     }
                     Row(){
                         //content
                         Text(
-                            text = post.author
+                            text = posts.author
                         )
                     }
                     Row(){
                         //date
                         Text(
-                        text = post.date_updated
+                        text = posts.date_updated
                         )
                     }
 
@@ -377,10 +380,10 @@ fun ScrollingImageList(imageList: List<ImageData>) {
 //
 //
 @Composable
-fun ScrollingNewsList(postList: Post) {
+fun ScrollingNewsList(posts: ArrayList<Post>) {
     LazyColumn {
-        items(postList) { post ->
-            NewsCard(post)
+        items(posts) { posts ->
+            NewsCard(posts)
         }
     }
 }

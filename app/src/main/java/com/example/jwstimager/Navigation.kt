@@ -15,8 +15,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+//import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 //https://www.youtube.com/watch?v=4gUeyNkGE3g&t=297s&ab_channel=PhilippLackner
+
 
 @Composable
 fun Navigation(){
@@ -36,7 +39,7 @@ fun Navigation(){
                 FavoritesScreen()
             }
             composable(Screen.NewsScreen.route) {
-                NewsScreen()
+                NewsScreen(posts = ArrayList())
             }
             composable(Screen.AboutScreen.route) {
                 AboutScreen()
@@ -202,7 +205,7 @@ fun FavoritesScreen(){
 //
 //
 @Composable
-fun NewsScreen(){
+fun NewsScreen(posts: ArrayList<Post>){
 
     JWSTimagerTheme {
         Surface(
@@ -211,7 +214,7 @@ fun NewsScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingNewsList(postList = )
+                ScrollingNewsList(posts)
 
             }
         }
