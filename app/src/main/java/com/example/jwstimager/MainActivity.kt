@@ -164,18 +164,18 @@ fun NewsCard(post : Post){
                 .height(100.dp)
                 .padding(3.dp)
                 .fillMaxWidth()
-                .border(width = 1.dp,color = Color(0xFFFFFFFF) ),
+                .border(width = 1.dp,color = Color(0x8899abC8) ),
                 color = MaterialTheme.colorScheme.primary
             ) {
                 Column(modifier = Modifier
-                    .border(width = 1.dp,color = Color(0xFFFFFFFF) )
+                    .border(width = 1.dp,color = Color(0x8899abC8) )
                 ){
                     Row(){
                         Column(modifier = Modifier
                             .height(35.dp)
                             .width(35.dp)
                             .padding(1.dp)
-                            .border(width = 1.dp,color = Color(0xFFFFFFFF) )
+                            .border(width = 1.dp,color = Color(0x8899abC8) )
                         ){
                             //thumbnail
                             AsyncImage(model = post.thumbnailURL,
