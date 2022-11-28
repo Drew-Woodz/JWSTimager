@@ -12,6 +12,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
@@ -148,6 +149,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
+
+
 //
 //
 @Composable
@@ -158,28 +163,40 @@ fun NewsCard(post : Post){
             Surface(modifier = Modifier
                 .height(100.dp)
                 .padding(3.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .border(width = 1.dp,color = Color(0xFFFFFFFF) ),
                 color = MaterialTheme.colorScheme.primary
             ) {
-                Column(){
+                Column(modifier = Modifier
+                    .border(width = 1.dp,color = Color(0xFFFFFFFF) )
+                ){
                     Row(){
-                        Column(){
+                        Column(modifier = Modifier
+                            .height(35.dp)
+                            .width(35.dp)
+                            .padding(1.dp)
+                            .border(width = 1.dp,color = Color(0xFFFFFFFF) )
+                        ){
                             //thumbnail
                             AsyncImage(model = post.thumbnailURL,
                                 contentDescription = post.title,
                                 modifier = Modifier
+                                    .fillMaxSize()
                             )
                         }
                         Column(){
                             //title <-link
                             Text(
-                                text = post.title
+                                text = post.title,
+                                color = Color(0xFFFFFFFF)
+
                             )
                         }
                     }
                     Row(){
                         //content
                         Text(
+
                             text = post.author
                         )
                     }
