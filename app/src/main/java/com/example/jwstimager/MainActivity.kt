@@ -49,90 +49,97 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory.*
 import java.io.ByteArrayOutputStream
 import java.lang.IndexOutOfBoundsException
 import java.lang.NullPointerException
-import java.util.ArrayList
+//import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class MainActivity : ComponentActivity() {
+    val posts = ArrayList<Post>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             JWSTimagerTheme {
                 // A surface container using the 'background' color from the theme
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(create())
-                .build()
-            val feedAPI = retrofit.create(FeedAPI::class.java)
-            val call = feedAPI.feed
-            call.enqueue(object : Callback<Feed> {
-                //On success
-                override fun onResponse(call: Call<Feed>, response: Response<Feed>) {
-                    //Log.d(TAG, "onResponse: feed: " + response.body().toString());
-                    Log.d(TAG, "onResponse: Server Response: $response")
-                    val entrys = response.body()!!
-                        .entrys
-                    Log.d(TAG, "onResponse: entrys: " + response.body().toString())
-                    Log.d(TAG, "onResponse: author: " + entrys[0].author.name)
-                    Log.d(TAG, "onResponse: updated: " + entrys[0].updated)
-                    Log.d(TAG, "onResponse: title: " + entrys[0].title)
-                    val posts = ArrayList<Post>()
-                    for (i in entrys.indices) {
-                        val extractXML1 = ExtractXML(entrys[i].content, "<a href=")
-                        val postContent = extractXML1.start()
-                        val extractXML2 = ExtractXML(entrys[i].content, "<img src=")
-                        try {
-                            postContent.add(extractXML2.start()[0])
-                        } catch (e: NullPointerException) {
-                            postContent.add(null)
-                            Log.e(TAG, "onResponse: NullPointerException(thumbnail):" + e.message)
-                        } catch (e: IndexOutOfBoundsException) {
-                            postContent.add(null)
-                            Log.e(TAG, "onResponse: IndexOutOfBoundsException(thumbnail):" + e.message)
-                        }
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(create())
+                    .build()
+                val feedAPI = retrofit.create(FeedAPI::class.java)
+                val call = feedAPI.feed
 
-                        //var postList = mutableListOf<Post>()
-                        val lastPosition = postContent.size - 1
-                        posts.add(
-                            Post(
-                                entrys[i].title,
-                                entrys[i].author.name,
-                                entrys[i].updated,
-                                postContent[0],
-                                postContent[lastPosition]
+
+                call.enqueue(object : Callback<Feed> {
+                    //On success
+                    override fun onResponse(call: Call<Feed>, response: Response<Feed>) {
+                        //Log.d(TAG, "onResponse: feed: " + response.body().toString());
+                        Log.d(TAG, "onResponse: Server Response: $response")
+                        val entrys = response.body()!!
+                            .entrys
+                        Log.d(TAG, "onResponse: entrys: " + response.body().toString())
+                        Log.d(TAG, "onResponse: author: " + entrys[0].author.name)
+                        Log.d(TAG, "onResponse: updated: " + entrys[0].updated)
+                        Log.d(TAG, "onResponse: title: " + entrys[0].title)
+                        for (i in entrys.indices) {
+                            val extractXML1 = ExtractXML(entrys[i].content, "<a href=")
+                            val postContent = extractXML1.start()
+                            val extractXML2 = ExtractXML(entrys[i].content, "<img src=")
+                            try {
+                                postContent.add(extractXML2.start()[0])
+                            } catch (e: NullPointerException) {
+                                postContent.add(null)
+                                Log.e(TAG,
+                                    "onResponse: NullPointerException(thumbnail):" + e.message)
+                            } catch (e: IndexOutOfBoundsException) {
+                                postContent.add(null)
+                                Log.e(TAG,
+                                    "onResponse: IndexOutOfBoundsException(thumbnail):" + e.message)
+                            }
+
+                            //var postList = mutableListOf<Post>()
+                            val lastPosition = postContent.size - 1
+                            posts.add(
+                                Post(
+                                    entrys[i].title,
+                                    entrys[i].author.name,
+                                    entrys[i].updated,
+                                    postContent[0],
+                                    postContent[lastPosition]
+                                )
                             )
-                        )
-                    }
-                    for (j in posts.indices) {
-                        Log.d(
-                            TAG, """onResponse: 
+                        }
+                        for (j in posts.indices) {
+                            Log.d(
+                                TAG, """onResponse: 
                         PostURL: ${posts[j].postURL}
                         ThumbnailURL: ${posts[j].thumbnailURL}
                         Title: ${posts[j].title}
                         Author: ${posts[j].author}
                         updated: ${posts[j].date_updated}
                         """
-                        )
+                            )
 
+                        }
                     }
-                }
 
-                //On failure
-                override fun onFailure(call: Call<Feed>, t: Throwable) {
-                    Log.e(TAG, "onFailure: Unable to retrieve RSS" + t.message)
-                    Toast.makeText(this@MainActivity, "An Error Occured", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
+                    //On failure
+                    override fun onFailure(call: Call<Feed>, t: Throwable) {
+                        Log.e(TAG, "onFailure: Unable to retrieve RSS" + t.message)
+                        Toast.makeText(this@MainActivity, "An Error Occured", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
 
-            Surface(
+
+                Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation()
+                    Navigation(posts)
                 }
+            }
 
         }
-
 
     }
     companion object {
@@ -144,7 +151,7 @@ class MainActivity : ComponentActivity() {
 //
 //
 @Composable
-fun NewsCard(posts: ArrayList<Post>){
+fun NewsCard(post : Post){
 
     Box(Modifier.fillMaxWidth()){
         Column(){
@@ -158,28 +165,28 @@ fun NewsCard(posts: ArrayList<Post>){
                     Row(){
                         Column(){
                             //thumbnail
-                            AsyncImage(model = posts.thumbnailURL,
-                                contentDescription = posts.title,
+                            AsyncImage(model = post.thumbnailURL,
+                                contentDescription = post.title,
                                 modifier = Modifier
                             )
                         }
                         Column(){
                             //title <-link
                             Text(
-                                text = posts.title
+                                text = post.title
                             )
                         }
                     }
                     Row(){
                         //content
                         Text(
-                            text = posts.author
+                            text = post.author
                         )
                     }
                     Row(){
                         //date
                         Text(
-                        text = posts.date_updated
+                        text = post.date_updated
                         )
                     }
 
@@ -382,8 +389,8 @@ fun ScrollingImageList(imageList: List<ImageData>) {
 @Composable
 fun ScrollingNewsList(posts: ArrayList<Post>) {
     LazyColumn {
-        items(posts) { posts ->
-            NewsCard(posts)
+        items(posts) { post ->
+            NewsCard(post)
         }
     }
 }

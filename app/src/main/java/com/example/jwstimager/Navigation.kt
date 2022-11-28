@@ -22,7 +22,7 @@ import kotlin.collections.ArrayList
 
 
 @Composable
-fun Navigation(){
+fun Navigation(posts : ArrayList<Post>){
     val navController = rememberNavController()
     Column(
         Modifier
@@ -39,7 +39,7 @@ fun Navigation(){
                 FavoritesScreen()
             }
             composable(Screen.NewsScreen.route) {
-                NewsScreen(posts = ArrayList())
+                NewsScreen(posts)
             }
             composable(Screen.AboutScreen.route) {
                 AboutScreen()
