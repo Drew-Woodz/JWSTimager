@@ -39,6 +39,7 @@ import coil.request.ImageRequest
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import kotlin.concurrent.thread
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
