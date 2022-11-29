@@ -1,13 +1,20 @@
 package com.example.jwstimager
 
+import android.graphics.drawable.shapes.OvalShape
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-//import androidx.compose.foundation.layout.RowScopeInstance.align
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -15,11 +22,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jwstimager.ui.theme.JWSTimagerTheme
+import java.lang.Math.round
+//import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 //https://www.youtube.com/watch?v=4gUeyNkGE3g&t=297s&ab_channel=PhilippLackner
 
+
 @Composable
-fun Navigation(){
+fun Navigation(posts : ArrayList<Post>){
     val navController = rememberNavController()
     Column(
         Modifier
@@ -36,7 +47,7 @@ fun Navigation(){
                 FavoritesScreen()
             }
             composable(Screen.NewsScreen.route) {
-                NewsScreen()
+                NewsScreen(posts)
             }
             composable(Screen.AboutScreen.route) {
                 AboutScreen()
@@ -51,22 +62,35 @@ fun Navigation(){
 
 @Composable
 fun NavBar(navController: NavController) {
-//    Box (Modifier
-//        .requiredHeight(35.dp)
-//        .fillMaxSize()
-//        //.padding(bottom = 200.dp)
-//        .offset(y = (-20).dp)
-//    ) {
+ /*   Surface(
+
+        border = BorderStroke(1.dp, color = Color(0xFFFFFFFF) ),
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.primary)
+            .fillMaxWidth()
+            .
+
+   ){*/
         Row(
+
+            horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeightIn(70.dp)
                 .offset(y = (-20).dp)
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(3.dp)
+                //.border(1.dp, color = Color(0xFFFFFFFF))
 
-            // horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             //*##############Home NAV Button##############*//
-            Button(onClick = { navController.navigate(Screen.HomeScreen.route) }) {
+            Button(onClick = { navController.navigate(Screen.HomeScreen.route) },
+                modifier = Modifier
+                    .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
+                    .padding(3.dp)
+
+
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_home),
@@ -77,7 +101,11 @@ fun NavBar(navController: NavController) {
 
             }
             //*##############Grid NAV Button##############*//
-            Button(onClick = { navController.navigate(Screen.GridScreen.route) }) {
+            Button(onClick = { navController.navigate(Screen.GridScreen.route) },
+                modifier = Modifier
+                    .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
+                    .padding(3.dp)
+                ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_grid),
@@ -88,7 +116,11 @@ fun NavBar(navController: NavController) {
 
             }
             //*##############Grid NAV Button##############*//
-            Button(onClick = { navController.navigate(Screen.FavoritesScreen.route) }) {
+            Button(onClick = { navController.navigate(Screen.FavoritesScreen.route) },
+                modifier = Modifier
+                    .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
+                    .padding(3.dp)
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_favorites),
@@ -99,7 +131,11 @@ fun NavBar(navController: NavController) {
 
             }
             //*##############Grid NAV Button##############*//
-            Button(onClick = { navController.navigate(Screen.NewsScreen.route) }) {
+            Button(onClick = { navController.navigate(Screen.NewsScreen.route) },
+                modifier = Modifier
+                    .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
+                    .padding(3.dp)
+                ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_news),
@@ -110,7 +146,11 @@ fun NavBar(navController: NavController) {
 
             }
             //*##############Grid NAV Button##############*//
-            Button(onClick = { navController.navigate(Screen.AboutScreen.route) }) {
+            Button(onClick = { navController.navigate(Screen.AboutScreen.route) },
+                modifier = Modifier
+                    .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
+                    .padding(3.dp)
+                ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_about),
@@ -122,7 +162,7 @@ fun NavBar(navController: NavController) {
             }
 
         }
-//    }
+  // }
 }
 
 @Composable
@@ -138,7 +178,7 @@ fun HomeScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = scraper.getURLs())
+                ScrollingImageList(imageList = scraper.getURLs())
             }
         }
 
@@ -190,7 +230,8 @@ fun FavoritesScreen(){
         ) {
             Column {
                 TitleBar()
-                //ScrollingList(imageList = SampleFavorites.sampleImageList)
+                //ScrollingImageList(imageList = SampleFavorites.sampleImageList)
+
             }
         }
 
@@ -205,7 +246,7 @@ fun FavoritesScreen(){
 //
 //
 @Composable
-fun NewsScreen(){
+fun NewsScreen(posts: ArrayList<Post>){
 
     JWSTimagerTheme {
         Surface(
@@ -214,7 +255,8 @@ fun NewsScreen(){
         ) {
             Column {
                 TitleBar()
-                //ScrollingList(imageList = SampleData.sampleImageList)
+                ScrollingNewsList(posts)
+
 
             }
         }
@@ -240,7 +282,6 @@ fun AboutScreen(){
             Column {
                 TitleBar()
                 AboutPage()
-
             }
         }
 

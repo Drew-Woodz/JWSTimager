@@ -16,6 +16,6 @@ val Pink40 = Color(0xFF7D5260)
 //val background = Color(0xFFFFFBFE)
 val Dark = Color(0xFF202125) //TODO edit transparency on these colors
 val StretchLimo = Color(0xFF2A2B30)
-val ExtraDark = Color(0xFF38393E)
+val LightDark = Color(0xFF38393E)
 val PenOne = Color(0x8899abC8)
 val PenTwo = Color(0xFFFFFFFF)

@@ -85,6 +85,19 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:2.5.3"
 
+    //Cardview
+    //implementation 'com.android.support.cardview-v7:25.1.0'
+    //Universal Image loader
+    //implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+
+    //Retrofit
+    //https://github.com/square/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Retrofit XML converter
+    //https://github.com/square/retrofit/tree/master/retrofit-converters/simplexml
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.9.0'
+
     /****************
      | For Database |
      ****************/
