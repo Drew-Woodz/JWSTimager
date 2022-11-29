@@ -153,12 +153,13 @@ class MainActivity : ComponentActivity() {
                     }
                 })
 
-
+                val scraper = flickrScrape()
+                scraper.scrape()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation(posts)
+                    Navigation(posts, scraper = scraper)
                 }
             }
 
@@ -262,7 +263,7 @@ fun FavoriteBoleean (){
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun ImageCard(imageurl: String) {
+fun ImageCard(image: ImageData) {
 
     val requestPermissionLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()
@@ -289,8 +290,8 @@ fun ImageCard(imageurl: String) {
             .animateContentSize()
             .padding(all = 8.dp)
     ) {
-        AsyncImage(model = imageurl,
-            contentDescription = "A JWST image",
+        AsyncImage(model = image.src_link,
+            contentDescription = stringResource(R.string.defaultContentDescription),
             modifier = Modifier
                 //.size(300.dp)
                 //.border(1.5.dp, MaterialTheme.colorScheme.primary)
@@ -338,7 +339,7 @@ fun ImageCard(imageurl: String) {
                             // Get image from url
                             val imageLoader = ImageLoader(context)
                             val request = ImageRequest.Builder(context)
-                                .data(imageurl)
+                                .data(image.src_link)
                                 .build()
 
                             coroutineScope.launch {
@@ -438,7 +439,7 @@ fun ImageCard(imageurl: String) {
                             }
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                                downloadImage(imageurl, directory, context, "JWSTimager-image")
+                                downloadImage(image.src_link, directory, context, "JWSTimager-image")
                                 Toast.makeText(context, "Downloaded", Toast.LENGTH_SHORT).show()
 
                                 when {
@@ -458,7 +459,7 @@ fun ImageCard(imageurl: String) {
                                 }
                             }
                             else {
-                                    downloadImage(imageurl, directory, context, "JWSTimager-image")
+                                    downloadImage(image.src_link, directory, context, "JWSTimager-image")
                                     Toast.makeText(context, "Downloaded", Toast.LENGTH_SHORT).show()
                                 }
 
@@ -536,7 +537,7 @@ fun GalleryImageCard(image: ImageData) {
             .padding(all = 8.dp)
     ) {
         AsyncImage(model = image.src_link,
-            contentDescription = image.title,
+            contentDescription = stringResource(R.string.defaultContentDescription),
             modifier = Modifier
                 //.size(300.dp)
                 //.border(1.5.dp, MaterialTheme.colorScheme.primary)
@@ -552,7 +553,10 @@ fun GalleryImageCard(image: ImageData) {
         ) {
             //val context = LocalContext.current
             IconButton(
-                onClick = { isSelected = !isSelected }
+                onClick = {
+                    isSelected = !isSelected
+                    image.isSelected = isSelected
+                }
             ) {
                 if (isSelected) {
                     Icon(
@@ -572,10 +576,10 @@ fun GalleryImageCard(image: ImageData) {
 //
 //
 @Composable
-fun ScrollingImageList(imageList: ArrayList<String>) {
+fun ScrollingImageList(imageList: ArrayList<ImageData>) {
     LazyColumn {
-        items(imageList) { imageurl ->
-            ImageCard(imageurl)
+        items(imageList) { image ->
+            ImageCard(image)
         }
     }
 }
@@ -592,16 +596,14 @@ fun ScrollingNewsList(posts: ArrayList<Post>) {
     }
 }
 
-
-
 //
 //
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ScrollingGridList(imageList: List<ImageData>) {
+internal fun ScrollingGridList(imageList: ArrayList<ImageData>) {
 
     LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
+        cells = GridCells.Fixed(3),
         content = {
             items(imageList) { image ->
                 GalleryImageCard(image)

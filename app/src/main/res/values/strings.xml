@@ -32,4 +32,7 @@
     <string name="andrew_linkedin">https://www.linkedin.com/in/andrewllockwood/</string>
     <string name="emmanuel_linkedin">TODO</string>
     <string name="jadrien_linkedin">TODO</string>
+
+    //Default image card
+    <string name="defaultContentDescription">A JWST image</string>
 </resources>

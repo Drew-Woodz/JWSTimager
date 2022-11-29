@@ -9,7 +9,7 @@ import kotlin.concurrent.thread
 class flickrScrape {
 
     //ArrayList of urls, use this variable to access the links
-    var urls: ArrayList<String> = arrayListOf()
+    var urls: ArrayList<ImageData> = arrayListOf()
 
     //use this function to update the urls array list
     fun scrape() {
@@ -24,7 +24,9 @@ class flickrScrape {
                 if (g != null) {
                     if(g.size > 1){
                         var h = g[1].split("\" height")
-                        urls?.add(h[0])
+                        urls?.add(ImageData(src_link = h[0]))
+                        Log.d(TAG, "scraped url: " + h[0] + "\n Array size: " + urls.size)
+
                     }
                 }
             }
@@ -32,9 +34,11 @@ class flickrScrape {
     }
     }
 
-    fun getURLs(): ArrayList<String> {
+    fun getURLs(): ArrayList<ImageData> {
         return urls
     }
 
-
+    companion object {
+        private const val TAG = "FlickrScraper"
+    }
 }
