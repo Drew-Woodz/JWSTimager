@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
 //
 //
 @Composable
-fun ImageCard(image: ImageData) {
+fun ImageCard(imageurl : String) {
 
     val coroutineScope = rememberCoroutineScope()
     var isFavorite by remember { mutableStateOf(false) }
@@ -74,8 +74,8 @@ fun ImageCard(image: ImageData) {
             .animateContentSize()
             .padding(all = 8.dp)
     ) {
-        AsyncImage(model = image.src_link,
-            contentDescription = image.title,
+        AsyncImage(model = imageurl,
+            contentDescription = "A JWST image",
             modifier = Modifier
                 //.size(300.dp)
                 //.border(1.5.dp, MaterialTheme.colorScheme.primary)
@@ -95,7 +95,7 @@ fun ImageCard(image: ImageData) {
                     // Get image from url
                     val imageLoader = ImageLoader(context)
                     val request = ImageRequest.Builder(context)
-                        .data(image.src_link)
+                        .data(imageurl)
                         .build()
 
                     coroutineScope.launch {
@@ -150,11 +150,11 @@ fun ImageCard(image: ImageData) {
                 var favIcon: ImageVector
                 if (isFavorite) {
                     favIcon = Icons.Filled.Check
-                    image.isFavorite = true
+                    //image.isFavorite = true
                 }
                 else {
                     favIcon = Icons.Rounded.Add
-                    image.isFavorite = false
+                    //image.isFavorite = false
                 }
                 Icon(
                     imageVector = favIcon,
@@ -165,23 +165,7 @@ fun ImageCard(image: ImageData) {
             }
         }
 
-
-            AnimatedVisibility(visible = isExpanded) {
-                //Spacer(modifier = Modifier.width(8.dp))
-
-                Box (
-                    Modifier
-                        .wrapContentWidth()
-                        .padding(all = 4.dp)
-                ){
-                    Text(
-                        text = image.title,
-                        color = MaterialTheme.colorScheme.secondary,
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
-            }
-        }
+    }
 }
 
 @Composable
@@ -308,14 +292,6 @@ fun AboutPage() {
 
         }
 
-        // Andrew
-
-        // Declan
-
-        // Emmanuel
-
-        // Jadrien
-
     }
 }
 
@@ -323,10 +299,10 @@ fun AboutPage() {
 //
 //
 @Composable
-fun ScrollingList(imageList: List<ImageData>) {
+fun ScrollingList(imageList: ArrayList<String>) {
     LazyColumn {
-        items(imageList) { image ->
-            ImageCard(image)
+        items(imageList) { imageurl ->
+            ImageCard(imageurl)
         }
     }
 }

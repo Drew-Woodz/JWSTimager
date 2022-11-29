@@ -128,6 +128,9 @@ fun NavBar(navController: NavController) {
 @Composable
 fun HomeScreen(){
 
+    val scraper = flickrScrape()
+    scraper.scrape()
+
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -135,7 +138,7 @@ fun HomeScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                ScrollingList(imageList = scraper.getURLs())
             }
         }
 
@@ -187,7 +190,7 @@ fun FavoritesScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleFavorites.sampleImageList)
+                //ScrollingList(imageList = SampleFavorites.sampleImageList)
             }
         }
 
@@ -211,7 +214,7 @@ fun NewsScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingList(imageList = SampleData.sampleImageList)
+                //ScrollingList(imageList = SampleData.sampleImageList)
 
             }
         }

@@ -1,5 +1,6 @@
 package com.example.jwstimager
 
+import android.util.Log
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
@@ -30,5 +31,10 @@ class flickrScrape {
         }
     }
     }
+
+    fun getURLs(): ArrayList<String> {
+        return urls
+    }
+
 
 }
