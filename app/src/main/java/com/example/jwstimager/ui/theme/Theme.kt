@@ -20,6 +20,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PenOne,
     tertiary = LightDark,
     inversePrimary = PenTwo,
+    onBackground = ListDark,
 )
 
 private val LightColorScheme = lightColorScheme(
