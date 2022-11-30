@@ -27,6 +27,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PenOne,
     tertiary = LightDark,
     inversePrimary = PenTwo,
+    onBackground = ListDark,
 
 
 

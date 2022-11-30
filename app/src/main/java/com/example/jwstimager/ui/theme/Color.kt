@@ -1,5 +1,6 @@
 package com.example.jwstimager.ui.theme
 
+import androidx.compose.foundation.background
 import androidx.compose.ui.graphics.Color
 
 // Original Dark Theme Colors
@@ -19,3 +20,4 @@ val StretchLimo = Color(0xFF2A2B30)
 val LightDark = Color(0xFF38393E)
 val PenOne = Color(0x8899abC8)
 val PenTwo = Color(0xFFFFFFFF)
+val ListDark = Color(0xFF171717)
