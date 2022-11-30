@@ -24,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -67,6 +68,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory.*
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.lang.IndexOutOfBoundsException
 import java.lang.NullPointerException
 //import java.util.ArrayList
@@ -199,17 +201,28 @@ fun NewsCard(post : Post){
                             .border(width = 1.dp,color = Color(0x8899abC8) )
                         ){
                             //thumbnail
-                            AsyncImage(model = post.thumbnailURL,
-                                contentDescription = post.title,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
+                            if (post.thumbnailURL != null) {
+
+                                AsyncImage(model = post.thumbnailURL,
+                                    contentDescription = post.title,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                            else{
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_reddit_icon),
+                                    contentDescription = "reddit logo",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
                         }
                         Column(){
                             //title <-link
                             Text(
                                 text = post.title,
-                                color = Color(0xFFFFFFFF)
+                                color = MaterialTheme.colorScheme.inversePrimary
 
                             )
                         }
@@ -218,13 +231,15 @@ fun NewsCard(post : Post){
                         //content
                         Text(
 
-                            text = post.author
+                            text = post.author,
+                            color = MaterialTheme.colorScheme.inversePrimary
                         )
                     }
                     Row(){
                         //date
                         Text(
-                        text = post.date_updated
+                            text = post.date_updated,
+                            color = MaterialTheme.colorScheme.inversePrimary
                         )
                     }
 
