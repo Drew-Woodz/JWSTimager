@@ -116,6 +116,7 @@ class MainActivity : ComponentActivity() {
 fun NewsCard(post : Post){
 
     Box(Modifier.fillMaxWidth()){
+        val context = LocalContext.current
         Column(){
             Surface(modifier = Modifier
                 .height(100.dp)
@@ -126,6 +127,15 @@ fun NewsCard(post : Post){
             ) {
                 Column(modifier = Modifier
                     .border(width = 1.dp,color = Color(0x8899abC8) )
+                    .clickable {
+                        val url = Uri.parse(post.postURL)
+                        val redditIntent = Intent().apply {
+                            action = Intent.ACTION_VIEW
+                            data = url
+                        }
+
+                        context.startActivity(redditIntent)
+                    }
                 ){
                     Row(){
                         Column(modifier = Modifier
@@ -189,25 +199,6 @@ fun NewsCard(post : Post){
 //
 //
 
-class Favorite : ViewModel()
-{
-    private var isFavorite : MutableLiveData<Boolean> = MutableLiveData(false)
-    var favorite : MutableLiveData<Boolean> = isFavorite
-    //var favorite by rememberSaveable { MutableState(false) }
-    var myFavorite = { mutableStateOf(false) }
-
-
-}
-
-
-/**
-@Composable
-fun FavoriteBoleean (){
-    var isFavorite : Boolean by remember { mutableStateOf(false) }
-    ImageCard(isFavorite = isFavorite, onClickChange = {isFavorite = it})
-}
-*/
-
 @SuppressLint("RestrictedApi")
 @Composable
 fun ImageCard(image: ImageData) {
@@ -225,7 +216,6 @@ fun ImageCard(image: ImageData) {
         }
     val context = LocalContext.current
 
-    lateinit var viewModel: Favorite
     val coroutineScope = rememberCoroutineScope()
     var expandMenu by remember { mutableStateOf(false) }
     var isFavorite by rememberSaveable { mutableStateOf(false) }
@@ -454,16 +444,6 @@ private fun downloadImage(url: String, directory: File, context: Context, title:
     cursor.moveToFirst()
     val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
 
-    var outcome = " "
-    outcome = when (status)
-    {
-        DownloadManager.STATUS_FAILED -> "Download has been failed, please try again"
-        DownloadManager.STATUS_RUNNING -> "Downloading"
-        DownloadManager.STATUS_SUCCESSFUL -> "Image downloaded successfully"
-
-    else-> "No Image Found"
-
-    }
     //showToast(outcome, context)
 }
 
