@@ -534,15 +534,6 @@ fun ScrollingImageList(imageList: ArrayList<ImageData>) {
         .background(color = MaterialTheme.colorScheme.onBackground)
         .padding(bottom = 55.dp)
     ) {
-        Text(
-            text = "Home",
-            color = MaterialTheme.colorScheme.secondary,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .padding(2.dp)
-                .align(Alignment.CenterHorizontally)
-
-        )
         LazyColumn {
             items(imageList) { image ->
                 ImageCard(image)

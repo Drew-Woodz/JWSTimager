@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +45,7 @@ fun Navigation(posts : ArrayList<Post>, scraper: flickrScrape){
                 GridScreen(scraper)
             }
             composable(Screen.FavoritesScreen.route) {
-                FavoritesScreen()
+                FavoritesScreen(scraper)
             }
             composable(Screen.NewsScreen.route) {
                 NewsScreen(posts)
@@ -167,8 +168,17 @@ fun HomeScreen(scraper : flickrScrape){
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.primary
         ) {
-            Column {
+            Column(Modifier.background(MaterialTheme.colorScheme.onBackground)) {
                 TitleBar()
+                Text(
+                    text = "Home",
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .align(Alignment.CenterHorizontally)
+
+                )
                 ScrollingImageList(imageList = scraper.getURLs())
             }
         }
@@ -187,7 +197,7 @@ fun GridScreen(scraper: flickrScrape){
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.primary
         ) {
-            Column {
+            Column(Modifier.background(MaterialTheme.colorScheme.onBackground)) {
                 TitleBar()
                 ScrollingGridList(imageList = scraper.getURLs())
             }
@@ -198,26 +208,24 @@ fun GridScreen(scraper: flickrScrape){
 //
 //
 @Composable
-fun FavoritesScreen(){
-
-// Didn't seem to work
-//    var favorites: MutableList<ImageData> = mutableListOf()
-//    SampleData.sampleImageList.forEach { image ->
-//        if (image.isFavorite)
-//        {
-//            favorites.add(image)
-//        }
-//    }
-
+fun FavoritesScreen(scraper: flickrScrape){
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.primary
         ) {
-            Column {
+            Column(Modifier.background(MaterialTheme.colorScheme.onBackground)) {
                 TitleBar()
-                //ScrollingImageList(imageList = SampleFavorites.sampleImageList)
+                Text(
+                    text = "Favorites",
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .align(Alignment.CenterHorizontally)
 
+                )
+                ScrollingImageList(imageList = scraper.getURLs())
             }
         }
 
