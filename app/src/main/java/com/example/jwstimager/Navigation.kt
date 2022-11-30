@@ -30,7 +30,7 @@ import kotlin.collections.ArrayList
 
 
 @Composable
-fun Navigation(posts : ArrayList<Post>){
+fun Navigation(posts : ArrayList<Post>, scraper: flickrScrape){
     val navController = rememberNavController()
     Column(
         Modifier
@@ -38,10 +38,10 @@ fun Navigation(posts : ArrayList<Post>){
     ) {
         NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
             composable(route = Screen.HomeScreen.route) {
-                HomeScreen()
+                HomeScreen(scraper)
             }
             composable(Screen.GridScreen.route) {
-                GridScreen()
+                GridScreen(scraper)
             }
             composable(Screen.FavoritesScreen.route) {
                 FavoritesScreen()
@@ -166,8 +166,8 @@ fun NavBar(navController: NavController) {
 }
 
 @Composable
-fun HomeScreen(){
-
+fun HomeScreen(scraper : flickrScrape){
+    //scraper.scrape()
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -175,7 +175,7 @@ fun HomeScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingImageList(imageList = SampleData.sampleImageList)
+                ScrollingImageList(imageList = scraper.getURLs())
             }
         }
 
@@ -187,8 +187,7 @@ fun HomeScreen(){
 //
 //
 @Composable
-fun GridScreen(){
-
+fun GridScreen(scraper: flickrScrape){
     JWSTimagerTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -196,14 +195,10 @@ fun GridScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingGridList(imageList = SampleData.sampleImageList)
-
+                ScrollingGridList(imageList = scraper.getURLs())
             }
         }
-
     }
-
-
 }
 
 //
@@ -227,7 +222,8 @@ fun FavoritesScreen(){
         ) {
             Column {
                 TitleBar()
-                ScrollingImageList(imageList = SampleFavorites.sampleImageList)
+                //ScrollingImageList(imageList = SampleFavorites.sampleImageList)
+
             }
         }
 
@@ -253,6 +249,7 @@ fun NewsScreen(posts: ArrayList<Post>){
                 TitleBar()
                 ScrollingNewsList(posts)
 
+
             }
         }
 
@@ -277,7 +274,6 @@ fun AboutScreen(){
             Column {
                 TitleBar()
                 AboutPage()
-
             }
         }
 

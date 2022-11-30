@@ -65,6 +65,10 @@ android {
 }
 
 dependencies {
+    implementation ('com.github.fabienbarbero:flickr-api:1.2') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
