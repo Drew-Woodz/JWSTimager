@@ -23,11 +23,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+//import androidx.compose.foundation.layout.BoxScopeInstance.align
+//import androidx.compose.foundation.layout.RowScopeInstance.align
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 //import androidx.compose.foundation.layout.ColumnScopeInstance.align
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
@@ -80,13 +79,14 @@ class MainActivity : ComponentActivity() {
     val posts = ArrayList<Post>()
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        /****FlickerScraper ****/
+        val flickrscraper = flickrScrape()
+        flickrscraper.scrape()
+
         /****RedditScrapper****/
         val redditscraper = RedditScraper()
         redditscraper.scrape(posts, applicationContext)
 
-        /****FlickerScraper ****/
-        val flickrscraper = flickrScrape()
-        flickrscraper.scrape()
 
         super.onCreate(savedInstanceState)
         setContent {
@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.onBackground
                 ) {
                     Navigation(posts, scraper = flickrscraper)
                 }
@@ -114,12 +114,23 @@ class MainActivity : ComponentActivity() {
 //
 @Composable
 fun NewsCard(post : Post){
-
+    var nullz: Boolean  = false
+    var snip : String
+    if (post.thumbnailURL == null){
+        nullz = true
+        snip = "NOT_IT"
+    }
+    else{
+        snip = post.thumbnailURL.take(15)
+    }
+    //val snip = post.thumbnailURL.take(15)
+    val trashTest = "https://preview"
     Box(Modifier.fillMaxWidth()){
         val context = LocalContext.current
         Column(){
             Surface(modifier = Modifier
-                .height(100.dp)
+                .requiredHeightIn(min = 70.dp, max = 110.dp)
+                //.height(100.dp)
                 .padding(3.dp)
                 .fillMaxWidth()
                 .border(width = 1.dp,color = Color(0x8899abC8) ),
@@ -145,18 +156,25 @@ fun NewsCard(post : Post){
                             .border(width = 1.dp,color = Color(0x8899abC8) )
                         ){
                             //thumbnail
-                            if (post.thumbnailURL != null) {
-
-                                AsyncImage(model = post.thumbnailURL,
-                                    contentDescription = post.title,
+                            if (nullz != null && nullz){
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_reddit_icon),
+                                    contentDescription = "reddit logo",
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                            else if(snip==trashTest){
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_reddit_icon),
+                                    contentDescription = "reddit logo",
                                     modifier = Modifier
                                         .fillMaxSize()
                                 )
                             }
                             else{
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_reddit_icon),
-                                    contentDescription = "reddit logo",
+                                AsyncImage(model = post.thumbnailURL,
+                                    contentDescription = post.title,
                                     modifier = Modifier
                                         .fillMaxSize()
                                 )
@@ -166,7 +184,8 @@ fun NewsCard(post : Post){
                             //title <-link
                             Text(
                                 text = post.title,
-                                color = MaterialTheme.colorScheme.inversePrimary
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                style = MaterialTheme.typography.titleSmall
 
                             )
                         }
@@ -176,14 +195,16 @@ fun NewsCard(post : Post){
                         Text(
 
                             text = post.author,
-                            color = MaterialTheme.colorScheme.inversePrimary
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            style = MaterialTheme.typography.titleSmall
                         )
                     }
                     Row(){
                         //date
                         Text(
                             text = post.date_updated,
-                            color = MaterialTheme.colorScheme.inversePrimary
+                            color = MaterialTheme.colorScheme.inversePrimary,
+                            style = MaterialTheme.typography.bodySmall
                         )
                     }
 
@@ -225,15 +246,19 @@ fun ImageCard(image: ImageData) {
     Box(
         modifier = Modifier
             .animateContentSize()
-            .padding(all = 8.dp)
+            .padding(all = 3.dp),
+
     ) {
+
         AsyncImage(model = image.src_link,
             contentDescription = stringResource(R.string.defaultContentDescription),
             modifier = Modifier
+                .fillMaxSize()
                 //.size(300.dp)
                 //.border(1.5.dp, MaterialTheme.colorScheme.primary)
                 //toggle is expanded by clicking on the image
-                .clickable { isExpanded = !isExpanded }
+                .clickable { isExpanded = !isExpanded },
+
 
 
         )
@@ -460,8 +485,9 @@ fun GalleryImageCard(image: ImageData) {
     var isSelected by remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
+            .fillMaxSize()
             .animateContentSize()
-            .padding(all = 8.dp)
+            .padding(all = 1.dp)
     ) {
         AsyncImage(model = image.src_link,
             contentDescription = stringResource(R.string.defaultContentDescription),
@@ -504,9 +530,23 @@ fun GalleryImageCard(image: ImageData) {
 //
 @Composable
 fun ScrollingImageList(imageList: ArrayList<ImageData>) {
-    LazyColumn {
-        items(imageList) { image ->
-            ImageCard(image)
+    Column(modifier = Modifier
+        .background(color = MaterialTheme.colorScheme.onBackground)
+        .padding(bottom = 55.dp)
+    ) {
+        Text(
+            text = "Home",
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(2.dp)
+                .align(Alignment.CenterHorizontally)
+
+        )
+        LazyColumn {
+            items(imageList) { image ->
+                ImageCard(image)
+            }
         }
     }
 }
@@ -516,9 +556,22 @@ fun ScrollingImageList(imageList: ArrayList<ImageData>) {
 //
 @Composable
 fun ScrollingNewsList(posts: ArrayList<Post>) {
-    LazyColumn {
-        items(posts) { post ->
-            NewsCard(post)
+    Column(modifier = Modifier
+        .background(color = MaterialTheme.colorScheme.onBackground)
+        .padding(bottom = 55.dp)) {
+        Text(
+            text = "Reddit/r/jamesWebb",
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(2.dp)
+                .align(Alignment.CenterHorizontally)
+
+        )
+        LazyColumn {
+            items(posts) { post ->
+                NewsCard(post)
+            }
         }
     }
 }
@@ -529,13 +582,26 @@ fun ScrollingNewsList(posts: ArrayList<Post>) {
 @Composable
 internal fun ScrollingGridList(imageList: ArrayList<ImageData>) {
 
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(3),
-        content = {
-            items(imageList) { image ->
-                GalleryImageCard(image)
+    Column(modifier = Modifier
+        .background(color = MaterialTheme.colorScheme.onBackground)
+        .padding(bottom = 55.dp)) {
+        Text(
+            text = "Grid",
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier
+                .padding(2.dp)
+                .align(Alignment.CenterHorizontally)
+
+        )
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(3),
+            content = {
+                items(imageList) { image ->
+                    GalleryImageCard(image)
+                }
             }
-        }
-    )
+        )
+    }
 
 }

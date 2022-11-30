@@ -62,25 +62,18 @@ fun Navigation(posts : ArrayList<Post>, scraper: flickrScrape){
 
 @Composable
 fun NavBar(navController: NavController) {
- /*   Surface(
-
-        border = BorderStroke(1.dp, color = Color(0xFFFFFFFF) ),
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.primary)
-            .fillMaxWidth()
-            .
-
-   ){*/
+Column() {
         Row(
 
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .requiredHeightIn(70.dp)
+                // .height(height = 55.dp)
                 .offset(y = (-20).dp)
                 .background(MaterialTheme.colorScheme.primary)
                 .padding(3.dp)
-                //.border(1.dp, color = Color(0xFFFFFFFF))
+            //.border(1.dp, color = Color(0xFFFFFFFF))
 
         ) {
             //*##############Home NAV Button##############*//
@@ -95,7 +88,7 @@ fun NavBar(navController: NavController) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_home),
                     contentDescription = "logo",
-                    //modifier = Modifier.size(70.dp, 70.dp)
+                    //modifier = Modifier.size(30.dp, 30.dp)
 
                 )
 
@@ -105,7 +98,7 @@ fun NavBar(navController: NavController) {
                 modifier = Modifier
                     .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
                     .padding(3.dp)
-                ) {
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_grid),
@@ -135,7 +128,7 @@ fun NavBar(navController: NavController) {
                 modifier = Modifier
                     .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
                     .padding(3.dp)
-                ) {
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_news),
@@ -150,7 +143,7 @@ fun NavBar(navController: NavController) {
                 modifier = Modifier
                     .border(1.dp, color = Color(0x8899abC8), shape = RoundedCornerShape(20.dp))
                     .padding(3.dp)
-                ) {
+            ) {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_about),
@@ -162,7 +155,8 @@ fun NavBar(navController: NavController) {
             }
 
         }
-  // }
+
+    }
 }
 
 @Composable
