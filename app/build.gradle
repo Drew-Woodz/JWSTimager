@@ -65,6 +65,10 @@ android {
 }
 
 dependencies {
+    implementation ('com.github.fabienbarbero:flickr-api:1.2') {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    implementation 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -80,6 +84,19 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     implementation "androidx.navigation:navigation-compose:2.5.3"
+
+    //Cardview
+    //implementation 'com.android.support.cardview-v7:25.1.0'
+    //Universal Image loader
+    //implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+
+    //Retrofit
+    //https://github.com/square/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Retrofit XML converter
+    //https://github.com/square/retrofit/tree/master/retrofit-converters/simplexml
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.9.0'
 
     /****************
      | For Database |

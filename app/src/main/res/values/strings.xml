@@ -12,14 +12,10 @@
     <string name="copyright">All Rights Reserved, <u>and Lefts.</u></string>
 
     //maker about
-    <string name="about_declan">I’m currently a student at CSU Channel Islands pursuing a degree in Computer Science.
-        Some of my hobbies include sailing, playing video games, as well as learning about Linux and other open source projects.</string>
-    <string name="about_andrew">Pursuing a  degree in Computer Science with a focus on C, C++, MATLAB, as well as
-        experience with Java, Kotlin, and ASM.  I am exploring an interest in software Engineering, Applied Physics, Robotics, and Engineering,
-        and gaining experience with Raspberry Pi, Arduino, and other embedded systems.</string>
-    <string name="about_emmanuel">I’m a student here at CSUCI and I’m pursuing a degree in Computer Science. I’ve created a few websites, and
-        have never done apps, but I’m really liking how to build the app and learning Kotlin. </string>
-    <string name="about_jadrien"></string>
+    <string name="about_declan">I’m currently a student at CSU Channel Islands pursuing a degree in Computer Science. Some of my hobbies include sailing, playing video games, as well as learning about Linux and other open source projects.</string>
+    <string name="about_andrew">Pursuing a degree in Computer Science with a focus on C, C++, MATLAB, as well as experience with Java, Kotlin, and ASM.  I am exploring an interest in software Engineering, Applied Physics, Robotics, and Engineering, and gaining experience with Raspberry Pi, Arduino, and other embedded systems.</string>
+    <string name="about_emmanuel">I’m a student here at CSUCI and I’m pursuing a degree in Computer Science. I’ve created a few websites, and have never done apps, but I’m really liking how to build the app and learning Kotlin. </string>
+    <string name="about_jadrien">I am a junior at CSUCI and live in Santa Barbara. I enjoy hanging out with my dogs and riding bikes on my free time. I have been learning Kotlin and Android programming since the beginning of this summer. I enjoy software engineering and want to find a career in this field.</string>
 
     //maker emails
     <string name="declan_email">declan.dury781@myci.csuci.edu</string>
@@ -27,9 +23,12 @@
     <string name="emmanuel_email">emmanuel.gavino757@myci.csuci.edu</string>
     <string name="jadrien_email">jadrien.hannon419@myci.csuci.edu</string>
 
-    //maker emails
+    //maker Linkedin
     <string name="declan_linkedin">https://www.linkedin.com/in/declan-dury-99a5481bb/</string>
     <string name="andrew_linkedin">https://www.linkedin.com/in/andrewllockwood/</string>
-    <string name="emmanuel_linkedin">TODO</string>
+    <string name="emmanuel_linkedin">https://www.linkedin.com/in/emmanuel-gavino-27608a259/</string>
     <string name="jadrien_linkedin">TODO</string>
+
+    //Default image card
+    <string name="defaultContentDescription">A JWST image</string>
 </resources>

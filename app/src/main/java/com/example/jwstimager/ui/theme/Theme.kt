@@ -18,13 +18,18 @@ import androidx.core.view.ViewCompat
 private val DarkColorScheme = darkColorScheme(
     primary = Dark,
     secondary = PenOne,
-    tertiary = ExtraDark
+    tertiary = LightDark,
+    inversePrimary = PenTwo,
+    onBackground = ListDark,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Dark,
     secondary = PenOne,
-    tertiary = ExtraDark
+    tertiary = LightDark,
+    inversePrimary = PenTwo,
+    onBackground = ListDark,
+
 
 
 
